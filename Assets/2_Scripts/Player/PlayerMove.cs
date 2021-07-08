@@ -4,30 +4,49 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    private PlayerData playerData;
+
+    private LayerMask layerMask = LayerMask.GetMask("Ground");
+    private Rigidbody2D rigidbody;
+    private BoxCollider2D boxCollider2D;
+    private Transform transform;
+    
     private float speed;
     private float jumpForce;
     private float dashForce;
     private float horizontalMove;
-    
+
+    private float groundCheckDist = 0.9f;
+
     private Vector3 vector;
     
     private bool isWalking;
+    private bool isJumping;
     
-    public PlayerMove(float _speed, float _jumpForce, float _dashForce)
+    public PlayerMove(PlayerData _playerData, Transform _transform)
     {
-        this.speed = _speed;
-        this.jumpForce = _jumpForce;
-        this.dashForce = _dashForce;
-    }
-
-    
-    
-    private void UpdateMovement()
-    {
+        this.playerData = _playerData;
         
+        this.speed = playerData.getSpeed;
+        this.jumpForce = playerData.getJumpForce;
+        this.dashForce = playerData.getDashForce;
+
+        this.transform = _transform;
+    }
+    
+    
+    
+    public void UpdateMovement()
+    {
+        CheckGround();
+        
+        Move();
+        Jump();
+        
+        Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
     }
 
-    public void Move(Transform transform)
+    private void Move()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         
@@ -44,11 +63,36 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    public void Jump(Transform transform)
+    private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
+            if (!isJumping)
+            {
+                isJumping = true;
+                rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
+    }
+
+    private void CheckGround()
+    {
+        var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask);
+        if (raycastHit2D.collider != null)
+        {
+            isJumping = false;
+        }
+        else
+        {
+            isJumping = true;
+        }
+    }
+    
+    
+    // Getters & Setters
+    public Rigidbody2D Rigidbody
+    {
+        get => rigidbody;
+        set => rigidbody = value;
     }
 }
