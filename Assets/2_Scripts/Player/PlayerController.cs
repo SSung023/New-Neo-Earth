@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,5 +23,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         playerMove.UpdateMovement();
+    }
+
+    //플레이어 사망시 실행되는 메서드
+    public void Die()
+    {
+        Debug.Log("플레이어 사망");
+
+        gameObject.SetActive(false);
     }
 }
