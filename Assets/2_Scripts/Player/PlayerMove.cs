@@ -21,6 +21,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     
+    
     private void UpdateMovement()
     {
         
@@ -40,6 +41,14 @@ public class PlayerMove : MonoBehaviour
         else
         {
             isWalking = false;
+        }
+    }
+
+    public void Jump(Transform transform)
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
         }
     }
 }
