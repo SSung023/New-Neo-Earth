@@ -36,9 +36,9 @@ public class FadeOutPlatform : MonoBehaviour
             float alpha = i / 10.0f;
             _spriteRenderer.color = new Color(1,1,1,alpha);
             
+            //alpha가 0.7이 되는 순간에 플랫폼 콜라이더 통과로 바꾸기
             if (alpha == 0.7f)
             {
-                Debug.Log("이거 되는겨?");
                 GetComponent<BoxCollider2D>().isTrigger = true;
             }
             yield return new WaitForSeconds(fadeOutSpeed);
