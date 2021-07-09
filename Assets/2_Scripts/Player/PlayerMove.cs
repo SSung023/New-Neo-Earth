@@ -14,7 +14,9 @@ public class PlayerMove : MonoBehaviour
     private float speed;
     private float jumpForce;
     private float dashForce;
+    
     private float horizontalMove;
+    private float verticalMove;
 
     private float groundCheckDist = 0.9f;
 
@@ -49,6 +51,7 @@ public class PlayerMove : MonoBehaviour
     private void Move()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
+        verticalMove = Input.GetAxisRaw("Vertical");
         
         if (horizontalMove != 0)
         {
@@ -61,6 +64,11 @@ public class PlayerMove : MonoBehaviour
         {
             isWalking = false;
         }
+    }
+
+    private void Dash()
+    {
+        Vector2 vector = new Vector2(-1f, 1);
     }
 
     private void Jump()
@@ -77,6 +85,7 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckGround()
     {
+        // 플레이어의 아래 방향을 계속 확인 -> 땅이 확인되면 점프 초기화
         var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask);
         if (raycastHit2D.collider != null)
         {
