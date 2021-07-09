@@ -22,6 +22,9 @@ public class PlayerMove : MonoBehaviour
 
     private Vector3 vector;
     
+    //
+    private Vector2 dashVector;
+    
     private bool isWalking;
     private bool isJumping;
     
@@ -44,7 +47,7 @@ public class PlayerMove : MonoBehaviour
         
         Move();
         Jump();
-        
+
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
     }
 
@@ -66,9 +69,17 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Dash()
+    private void Dash() // 수정 중. 보류
     {
-        Vector2 vector = new Vector2(-1f, 1);
+        // 왼쪽 방향키와 아래를 같이 눌렀을 때 왼쪽 대각선 아래만 인식이 되어야하는데 그게 애매하다.
+        // 잠깐이라도 방향키를 하나 빼 먹으면 다른 방향이 입력될 가능성이 있음.
+        
+        dashVector = new Vector2(horizontalMove, verticalMove);
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
+        }
     }
 
     private void Jump()
