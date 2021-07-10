@@ -16,3 +16,4 @@ MonoBehaviour:
   maxHp: 5
   jumpForce: 8
   dashForce: 4
+  dashDistance: 1.5

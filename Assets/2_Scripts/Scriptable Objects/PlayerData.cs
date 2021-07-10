@@ -16,4 +16,7 @@ public class PlayerData : ScriptableObject
 
     [SerializeField] private float dashForce;
     public float getDashForce { get { return dashForce; } }
+
+    [SerializeField] private float dashDistance;
+    public float getDashDistance { get { return dashDistance; } }
 }
