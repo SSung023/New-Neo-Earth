@@ -6,17 +6,20 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [SerializeField] private float speed;
-    public float getSpeed { get { return speed; } }
+    public float getSpeed => speed;
+
+    [SerializeField] private float slidingSpeed;
+    public float getSlidingSpeed => slidingSpeed;
 
     [SerializeField] private int maxHp;
-    public int getMaxHp { get { return maxHp; } }
+    public int getMaxHp => maxHp;
 
     [SerializeField] private float jumpForce;
-    public float getJumpForce { get { return jumpForce; } }
+    public float getJumpForce => jumpForce;
 
     [SerializeField] private float dashForce;
-    public float getDashForce { get { return dashForce; } }
+    public float getDashForce => dashForce;
 
-    [SerializeField] private float dashDistance;
-    public float getDashDistance { get { return dashDistance; } }
+    [SerializeField] private float dashCoolTime;
+    public float getDashCoolTime => dashCoolTime;
 }

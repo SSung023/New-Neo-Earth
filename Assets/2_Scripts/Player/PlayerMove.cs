@@ -6,23 +6,26 @@ public class PlayerMove : MonoBehaviour
 {
     private PlayerData playerData;
 
-    private LayerMask layerMask = LayerMask.GetMask("Ground");
+    private LayerMask layerMask_ground = LayerMask.GetMask("Ground");
+    private LayerMask layerMask_wall = LayerMask.GetMask("Wall");
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxCollider2D;
     private Transform transform;
     
     private float speed;
+    private float slidingSpeed;
     private float jumpForce;
     private float dashForce;
+    private float dashCoolTime; // const
+    private float curDashTime; // 쿨타임에 사용될 변수
     
     private float horizontalMove;
     private float verticalMove;
 
-    private float groundCheckDist = 0.9f;
+    private const float groundCheckDist = 0.9f;
+    private const float wallCheckDist = 0.5f;
 
-    private Vector3 vector;
-    
-    //
+    //private Vector3 vector;
     private Vector2 dashVector;
     
     private bool isWalking;
@@ -33,8 +36,11 @@ public class PlayerMove : MonoBehaviour
         this.playerData = _playerData;
         
         this.speed = playerData.getSpeed;
+        this.slidingSpeed = playerData.getSlidingSpeed;
         this.jumpForce = playerData.getJumpForce;
         this.dashForce = playerData.getDashForce;
+        this.dashCoolTime = playerData.getDashCoolTime;
+        curDashTime = dashCoolTime;
 
         this.transform = _transform;
     }
@@ -61,8 +67,9 @@ public class PlayerMove : MonoBehaviour
         {
             isWalking = true;
             
-            vector.Set(horizontalMove, 0.0f, 0.0f);
-            transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
+            //vector.Set(horizontalMove, 0.0f, 0.0f);
+            //transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
+            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
         }
         else
         {
@@ -70,15 +77,25 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Dash() // 수정 중. 보류
+    private void Dash()
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (curDashTime <= 0)
         {
-            // AddForce로는 원하는 만큼 뿅하고 이동이 안됨 가다가 흐느적거림
-            //rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
-            //transform.
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Debug.Log("dash");
+                // AddForce나 velocity 중 하나 선택
+                //rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
+                rigidbody.velocity = dashVector * dashForce;
+                
+                curDashTime = dashCoolTime;
+            }
+        }
+        else
+        {
+            curDashTime -= Time.deltaTime;
         }
     }
 
@@ -89,15 +106,23 @@ public class PlayerMove : MonoBehaviour
             if (!isJumping)
             {
                 isJumping = true;
-                rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                
+                // AddForce나 velocity 중 하나 선택
+                //rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rigidbody.velocity = Vector2.up * jumpForce;
             }
         }
+    }
+
+    private void CheckWall()
+    {
+        var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDist, layerMask_wall);
     }
 
     private void CheckGround()
     {
         // 플레이어의 아래 방향을 계속 확인 -> 땅이 확인되면 점프 초기화
-        var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask);
+        var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask_ground);
         if (raycastHit2D.collider != null)
         {
             isJumping = false;
