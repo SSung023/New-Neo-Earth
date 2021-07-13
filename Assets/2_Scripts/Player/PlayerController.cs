@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     private PlayerMove playerMove;
+    
+    [SerializeField] private Transform wallCheckTransform;
 
     private bool isAlive;
     private int curHealth;
@@ -17,7 +19,7 @@ public class PlayerController : MonoBehaviour
     
     private void Awake()
     {
-        playerMove = new PlayerMove(playerData, transform);
+        playerMove = new PlayerMove(playerData, transform, wallCheckTransform);
         playerMove.Rigidbody = GetComponent<Rigidbody2D>();
     }
     private void Start()

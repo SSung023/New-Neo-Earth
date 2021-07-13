@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   speed: 3
-  slidingSpeed: 1.5
+  slidingSpeed: 0.5
   maxHp: 5
   jumpForce: 6
   dashForce: 10

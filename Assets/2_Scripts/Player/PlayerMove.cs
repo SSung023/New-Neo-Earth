@@ -11,7 +11,8 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxCollider2D;
     private Transform transform;
-    
+    private Transform wallCheckTransform;
+
     private float speed;
     private float slidingSpeed;
     private float jumpForce;
@@ -23,15 +24,16 @@ public class PlayerMove : MonoBehaviour
     private float verticalMove;
 
     private const float groundCheckDist = 0.9f;
-    private const float wallCheckDist = 0.5f;
+    private const float wallCheckDist = 0.1f;
 
     //private Vector3 vector;
     private Vector2 dashVector;
     
     private bool isWalking;
     private bool isJumping;
+    private bool isWall; // 벽타기 유무
     
-    public PlayerMove(PlayerData _playerData, Transform _transform)
+    public PlayerMove(PlayerData _playerData, Transform _transform, Transform _wallCheckTransform)
     {
         this.playerData = _playerData;
         
@@ -43,6 +45,7 @@ public class PlayerMove : MonoBehaviour
         curDashTime = dashCoolTime;
 
         this.transform = _transform;
+        wallCheckTransform = _wallCheckTransform;
     }
     
     
@@ -50,13 +53,14 @@ public class PlayerMove : MonoBehaviour
     public void UpdateMovement()
     {
         CheckGround();
-        
+        CheckWall();
+
         Move();
         Jump();
         Dash();
 
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
-        Debug.DrawRay(transform.position, Vector3.right * wallCheckDist * horizontalMove, Color.cyan);
+        Debug.DrawRay(wallCheckTransform.position, Vector3.right * wallCheckDist * horizontalMove, Color.cyan);
     }
 
     private void Move()
@@ -67,10 +71,17 @@ public class PlayerMove : MonoBehaviour
         if (horizontalMove != 0)
         {
             isWalking = true;
-            
-            //vector.Set(horizontalMove, 0.0f, 0.0f);
-            //transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
-            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+
+            if (!isWall)
+            {
+                //vector.Set(horizontalMove, 0.0f, 0.0f);
+                //transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
+                rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+            }
+            else
+            {
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
+            }
         }
         else
         {
@@ -118,7 +129,7 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckWall()
     {
-        var raycastHit2D = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDist, layerMask_wall);
+        isWall = Physics2D.Raycast(transform.position, Vector2.right * horizontalMove, wallCheckDist, layerMask_wall);
     }
 
     private void CheckGround()
