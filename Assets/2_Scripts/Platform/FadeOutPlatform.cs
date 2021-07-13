@@ -18,9 +18,9 @@ public class FadeOutPlatform : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collider)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (collider.gameObject.tag == "Player")
+        if (col.gameObject.CompareTag("Player"))
         {
             cnt++;
             
