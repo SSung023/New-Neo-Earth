@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
     private bool isWall; // 벽타기 유무
     [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool isSightRight;
+    private bool isGround;
 
     [HideInInspector] public bool coroutineStart = false;
     
@@ -61,19 +62,43 @@ public class PlayerMove : MonoBehaviour
     
     public void UpdateMovement()
     {
-        CheckGround();
-        CheckWall();
-
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        isGround = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask_ground);
+        isWall = Physics2D.Raycast(wallCheckTransform_r.position, Vector2.right, wallCheckDist, layerMask_wall);
+        
         if (!isWallJumping)
+            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+            
+        if (isGround)
         {
-            Move();
-            Jump();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rigidbody.velocity = Vector2.up * jumpForce;
+            }
         }
         
-        WallMove();
-        Dash();
-
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
+        if (isWall)
+        {
+            isWallJumping = false;
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                // isWallJumping = true;
+                // coroutineStart = true;
+                // rigidbody.velocity = new Vector2(-1 * (jumpForce * 0.5f), jumpForce * 0.9f);
+                    
+                if (!isWallJumping)
+                {
+                    isWallJumping = true;
+                    coroutineStart = true;
+                    //rigidbody.velocity = new Vector2(-1, 1) * (jumpForce * 0.5f);
+                    rigidbody.AddForce(new Vector2(-1, 1) * jumpForce, ForceMode2D.Impulse);
+                    Debug.Log("벽점프 실행");
+                }
+            }
+        }
+            
+        Debug.DrawRay(wallCheckTransform_r.position, Vector3.right * wallCheckDist, Color.cyan);
     }
 
     private void Move()
@@ -140,7 +165,7 @@ public class PlayerMove : MonoBehaviour
     private void Dash() // 미완성
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
-        Debug.Log(dashVector);
+        //Debug.Log(dashVector);
 
         if (curDashTime <= 0)
         {
