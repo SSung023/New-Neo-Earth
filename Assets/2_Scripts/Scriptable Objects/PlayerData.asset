@@ -18,3 +18,9 @@ MonoBehaviour:
   jumpForce: 6
   dashForce: 10
   dashCoolTime: 1
+  layerMask_ground:
+    serializedVersion: 2
+    m_Bits: 512
+  layerMask_wall:
+    serializedVersion: 2
+    m_Bits: 256

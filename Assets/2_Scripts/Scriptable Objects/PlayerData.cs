@@ -22,4 +22,10 @@ public class PlayerData : ScriptableObject
 
     [SerializeField] private float dashCoolTime;
     public float getDashCoolTime => dashCoolTime;
+
+    [SerializeField] private LayerMask layerMask_ground;
+    public LayerMask getLayermask_ground => layerMask_ground;
+
+    [SerializeField] private LayerMask layerMask_wall;
+    public LayerMask getLayermask_wall => layerMask_wall;
 }

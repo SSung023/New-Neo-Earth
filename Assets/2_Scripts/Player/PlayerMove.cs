@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     private PlayerData playerData;
+    private Blackboard blackboard;
 
-    private LayerMask layerMask_ground = LayerMask.GetMask("Ground");
-    private LayerMask layerMask_wall = LayerMask.GetMask("Wall");
+    private LayerMask layerMask_ground;
+    private LayerMask layerMask_wall;
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxCollider2D;
     private Transform transform;
@@ -26,14 +27,16 @@ public class PlayerMove : MonoBehaviour
 
     private const float groundCheckDist = 0.9f;
     private const float wallCheckDist = 0.1f;
-
-    //private Vector3 vector;
+    
     private Vector2 dashVector;
     
     private bool isWalking;
     private bool isJumping;
     private bool isWall; // 벽타기 유무
+    [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool isSightRight;
+
+    [HideInInspector] public bool coroutineStart;
     
     public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
@@ -49,6 +52,9 @@ public class PlayerMove : MonoBehaviour
         this.transform = _transform;
         wallCheckTransform_r = _wallCheckTransform[0];
         wallCheckTransform_l = _wallCheckTransform[1];
+
+        layerMask_ground = playerData.getLayermask_ground;
+        layerMask_wall = playerData.getLayermask_wall;
     }
     
     
@@ -58,9 +64,13 @@ public class PlayerMove : MonoBehaviour
         CheckGround();
         CheckWall();
 
-        Move();
+        if (!isWallJumping)
+        {
+            Move();
+            Jump();
+        }
+        
         WallMove();
-        Jump();
         Dash();
 
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
@@ -90,8 +100,35 @@ public class PlayerMove : MonoBehaviour
     {
         if (isWall)
         {
-            // 벽에 닿아있는 상태라면 느리게 벽에서 미끄러진다.
-            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y * slidingSpeed);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                // 이 부분에 코루틴을 실행해서 일정 시간 후에 isWallJumping = false로 바꿔줘야 한다.
+                isWallJumping = true;
+                coroutineStart = true;
+                rigidbody.velocity = new Vector2(-1, 1) * jumpForce;
+            }
+            else
+            {
+                isWallJumping = false;
+                // 벽에 닿아있는 상태라면 느리게 벽에서 미끄러진다.
+                rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y * slidingSpeed);
+            }
+            
+        }
+    }
+    
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!isJumping)
+            {
+                isJumping = true;
+                
+                // AddForce나 velocity 중 하나 선택
+                //rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rigidbody.velocity = Vector2.up * jumpForce;
+            }
         }
     }
 
@@ -115,21 +152,6 @@ public class PlayerMove : MonoBehaviour
         else
         {
             curDashTime -= Time.deltaTime;
-        }
-    }
-
-    private void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isJumping)
-            {
-                isJumping = true;
-                
-                // AddForce나 velocity 중 하나 선택
-                //rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                rigidbody.velocity = Vector2.up * jumpForce;
-            }
         }
     }
 

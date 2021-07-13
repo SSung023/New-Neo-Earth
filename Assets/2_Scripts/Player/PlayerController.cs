@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         isAlive = true;
+        curHealth = playerData.getMaxHp;
 
     }
     private void Update()
@@ -36,6 +37,12 @@ public class PlayerController : MonoBehaviour
         if (isAlive)
         {
             playerMove.UpdateMovement();
+        }
+
+        if (playerMove.coroutineStart)
+        {
+            playerMove.coroutineStart = false;
+            StartCoroutine(changeValue());
         }
         RestartGame();
     }
@@ -66,8 +73,6 @@ public class PlayerController : MonoBehaviour
         var _color = spriteRenderer.color;
         _color.a = 0f;
         spriteRenderer.color = _color;
-        
-        //gameObject.SetActive(false);
     }
     
     // 임시로 넣은 기능. R키를 누르면 재시작
@@ -77,5 +82,13 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    public IEnumerator changeValue()
+    {
+        yield return new WaitForSeconds(0.5f);
+        playerMove.isWallJumping = false;
+
+        Debug.Log("isWallJumping을 false로 바꿈");
     }
 }
