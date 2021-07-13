@@ -56,6 +56,7 @@ public class PlayerMove : MonoBehaviour
         Dash();
 
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
+        Debug.DrawRay(transform.position, Vector3.right * wallCheckDist * horizontalMove, Color.cyan);
     }
 
     private void Move()
@@ -77,9 +78,10 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Dash()
+    private void Dash() // 미완성
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
+        Debug.Log(dashVector);
 
         if (curDashTime <= 0)
         {
