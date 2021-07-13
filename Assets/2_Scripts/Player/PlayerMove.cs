@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool isSightRight;
 
-    [HideInInspector] public bool coroutineStart;
+    [HideInInspector] public bool coroutineStart = false;
     
     public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
@@ -103,14 +103,19 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 // 이 부분에 코루틴을 실행해서 일정 시간 후에 isWallJumping = false로 바꿔줘야 한다.
-                isWallJumping = true;
-                coroutineStart = true;
-                rigidbody.velocity = new Vector2(-1, 1) * jumpForce;
+                if (!isWallJumping)
+                {
+                    isWallJumping = true;
+                    coroutineStart = true;
+                    rigidbody.velocity = new Vector2(-1, 1) * (jumpForce * 0.5f);
+                    Debug.Log("벽점프 실행");
+                }
             }
             else
             {
                 isWallJumping = false;
                 // 벽에 닿아있는 상태라면 느리게 벽에서 미끄러진다.
+                Debug.Log("wallmove의 else문 실행");
                 rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y * slidingSpeed);
             }
             

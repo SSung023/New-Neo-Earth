@@ -37,13 +37,14 @@ public class PlayerController : MonoBehaviour
         if (isAlive)
         {
             playerMove.UpdateMovement();
+            
+            if (playerMove.coroutineStart)
+            {
+                StartCoroutine(changeValue());
+            }
         }
 
-        if (playerMove.coroutineStart)
-        {
-            playerMove.coroutineStart = false;
-            StartCoroutine(changeValue());
-        }
+        
         RestartGame();
     }
     
@@ -86,9 +87,10 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator changeValue()
     {
+        playerMove.coroutineStart = false;
         yield return new WaitForSeconds(0.5f);
         playerMove.isWallJumping = false;
 
-        Debug.Log("isWallJumping을 false로 바꿈");
+        Debug.Log("0.5초 후에 isWallJumping을 false로 바꿈");
     }
 }
