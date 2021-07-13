@@ -11,7 +11,8 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxCollider2D;
     private Transform transform;
-    private Transform wallCheckTransform;
+    private Transform wallCheckTransform_r;
+    private Transform wallCheckTransform_l;
 
     private float speed;
     private float slidingSpeed;
@@ -32,8 +33,9 @@ public class PlayerMove : MonoBehaviour
     private bool isWalking;
     private bool isJumping;
     private bool isWall; // 벽타기 유무
+    private bool isSightRight;
     
-    public PlayerMove(PlayerData _playerData, Transform _transform, Transform _wallCheckTransform)
+    public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
         this.playerData = _playerData;
         
@@ -45,7 +47,8 @@ public class PlayerMove : MonoBehaviour
         curDashTime = dashCoolTime;
 
         this.transform = _transform;
-        wallCheckTransform = _wallCheckTransform;
+        wallCheckTransform_r = _wallCheckTransform[0];
+        wallCheckTransform_l = _wallCheckTransform[1];
     }
     
     
@@ -56,36 +59,39 @@ public class PlayerMove : MonoBehaviour
         CheckWall();
 
         Move();
+        WallMove();
         Jump();
         Dash();
 
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDist, Color.cyan);
-        Debug.DrawRay(wallCheckTransform.position, Vector3.right * wallCheckDist * horizontalMove, Color.cyan);
     }
 
     private void Move()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
-        
+        CheckSight(); // 어느 방향을 바라보고 있는지 체크
+
         if (horizontalMove != 0)
         {
             isWalking = true;
 
-            if (!isWall)
-            {
-                //vector.Set(horizontalMove, 0.0f, 0.0f);
-                //transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
-                rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
-            }
-            else
-            {
-                rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
-            }
+            //vector.Set(horizontalMove, 0.0f, 0.0f);
+            //transform.Translate(vector.x * speed * Time.deltaTime, 0,0);
+            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
         }
         else
         {
             isWalking = false;
+        }
+    }
+
+    private void WallMove()
+    {
+        if (isWall)
+        {
+            // 벽에 닿아있는 상태라면 느리게 벽에서 미끄러진다.
+            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y * slidingSpeed);
         }
     }
 
@@ -129,7 +135,16 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckWall()
     {
-        isWall = Physics2D.Raycast(transform.position, Vector2.right * horizontalMove, wallCheckDist, layerMask_wall);
+        if (isSightRight)
+        {
+            isWall = Physics2D.Raycast(wallCheckTransform_r.position, Vector2.right, wallCheckDist, layerMask_wall);
+            Debug.DrawRay(wallCheckTransform_r.position, Vector3.right * wallCheckDist, Color.cyan);
+        }
+        else
+        {
+            isWall = Physics2D.Raycast(wallCheckTransform_l.position, Vector2.left, wallCheckDist, layerMask_wall);
+            Debug.DrawRay(wallCheckTransform_l.position, Vector3.left * wallCheckDist, Color.cyan);
+        }
     }
 
     private void CheckGround()
@@ -145,8 +160,21 @@ public class PlayerMove : MonoBehaviour
             isJumping = true;
         }
     }
-    
-    
+
+    private void CheckSight()
+    {
+        // 어느 방향을 바라보고 있는지 체크하는 구문
+        if (horizontalMove == 1)
+        {
+            isSightRight = true;
+        }
+        else if (horizontalMove == -1)
+        {
+            isSightRight = false;
+        }
+    }
+
+
     // Getters & Setters
     public Rigidbody2D Rigidbody
     {
