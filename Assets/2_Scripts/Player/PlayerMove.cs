@@ -19,7 +19,6 @@ public class PlayerMove : MonoBehaviour
     private readonly float slidingSpeed;
     private readonly float jumpForce;
     private readonly float dashForce;
-    private readonly float dashDuration; // 대쉬가 지속될 시간
     private readonly float dashCoolTime; // const
     private float curDashTime; // 쿨타임에 사용될 변수
     
@@ -49,7 +48,6 @@ public class PlayerMove : MonoBehaviour
         this.jumpForce = playerData.getJumpForce;
         this.dashForce = playerData.getDashForce;
         this.dashCoolTime = playerData.getDashCoolTime;
-        this.dashDuration = playerData.getDashDuration;
         curDashTime = dashCoolTime;
 
         this.transform = _transform;
@@ -141,8 +139,6 @@ public class PlayerMove : MonoBehaviour
                 dashCoroutineStart = true;
 
                 rigidbody.velocity = Vector2.zero;
-                // AddForce나 velocity 중 하나 선택
-                //rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
                 rigidbody.velocity = dashVector * dashForce;
                 
                 Debug.Log("dashVector : " + dashVector);
