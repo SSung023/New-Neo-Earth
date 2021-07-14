@@ -89,7 +89,9 @@ public class PlayerController : MonoBehaviour
     {
         playerMove.coroutineStart = false;
         playerMove.isSpaceOn = true;
+        
         yield return new WaitForSeconds(0.3f);
+        
         playerMove.isWallJumping = false;
         playerMove.isSpaceOn = false;
     }
