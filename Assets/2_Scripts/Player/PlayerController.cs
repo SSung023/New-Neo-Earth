@@ -85,12 +85,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public IEnumerator changeValue()
+    IEnumerator changeValue()
     {
         playerMove.coroutineStart = false;
-        yield return new WaitForSeconds(0.5f);
+        playerMove.isSpaceOn = true;
+        yield return new WaitForSeconds(0.3f);
         playerMove.isWallJumping = false;
+        playerMove.isSpaceOn = false;
 
-        Debug.Log("0.5초 후에 isWallJumping을 false로 바꿈");
+        Debug.Log("0.3초 후에 isWallJumping을 false로 바꿈");
     }
 }
