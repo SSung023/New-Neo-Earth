@@ -19,9 +19,11 @@ public class PlayerMove : MonoBehaviour
     private readonly float slidingSpeed;
     private readonly float jumpForce;
     private readonly float dashForce;
+    private readonly float dashDuration; // 대쉬가 지속될 시간
     private readonly float dashCoolTime; // const
     private float curDashTime; // 쿨타임에 사용될 변수
     
+
     private float horizontalMove;
     private float verticalMove;
     private float isSightRight;
@@ -35,7 +37,8 @@ public class PlayerMove : MonoBehaviour
     private bool isGround;
     [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     [HideInInspector] public bool isSpaceOn = false;
-    [HideInInspector] public bool coroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+    [HideInInspector] public bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+    [HideInInspector] public bool dashCoroutineStart = false;
     
     public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
@@ -46,6 +49,7 @@ public class PlayerMove : MonoBehaviour
         this.jumpForce = playerData.getJumpForce;
         this.dashForce = playerData.getDashForce;
         this.dashCoolTime = playerData.getDashCoolTime;
+        this.dashDuration = playerData.getDashDuration;
         curDashTime = dashCoolTime;
 
         this.transform = _transform;
@@ -111,7 +115,7 @@ public class PlayerMove : MonoBehaviour
             if (!isWallJumping)
             {
                 isWallJumping = true;
-                coroutineStart = true;
+                wallCoroutineStart = true;
                 rigidbody.velocity = new Vector2(-1f * isSightRight, 1.75f) * (jumpForce * 0.5f);
             }
         }
@@ -134,8 +138,8 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 // SetDashVector();
-                coroutineStart = true;
-                
+                dashCoroutineStart = true;
+
                 rigidbody.velocity = Vector2.zero;
                 // AddForce나 velocity 중 하나 선택
                 //rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
@@ -166,6 +170,11 @@ public class PlayerMove : MonoBehaviour
     private void SetDashVector()
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
+
+        if (horizontalMove == 0 && verticalMove == 0)
+        {
+            dashVector = new Vector2(isSightRight, verticalMove);
+        }
     }
 
     private void CheckWall()

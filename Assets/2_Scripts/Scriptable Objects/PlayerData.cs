@@ -23,6 +23,9 @@ public class PlayerData : ScriptableObject
     [SerializeField] private float dashCoolTime;
     public float getDashCoolTime => dashCoolTime;
 
+    [SerializeField] private float dashDuration;
+    public float getDashDuration => dashDuration;
+
     [SerializeField] private LayerMask layerMask_ground;
     public LayerMask getLayermask_ground => layerMask_ground;
 

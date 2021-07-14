@@ -38,9 +38,13 @@ public class PlayerController : MonoBehaviour
         {
             playerMove.UpdateMovement();
             
-            if (playerMove.coroutineStart)
+            if (playerMove.wallCoroutineStart)
             {
                 StartCoroutine(changeValue());
+            }
+            if (playerMove.dashCoroutineStart)
+            {
+                StartCoroutine(controlRigid());
             }
         }
 
@@ -87,12 +91,24 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator changeValue()
     {
-        playerMove.coroutineStart = false;
+        playerMove.wallCoroutineStart = false;
+        playerMove.isSpaceOn = true;
+        yield return new WaitForSeconds(0.3f);
+        playerMove.isWallJumping = false;
+        playerMove.isSpaceOn = false;
+    }
+
+    IEnumerator controlRigid()
+    {
+        playerMove.dashCoroutineStart = false;
+        playerMove.Rigidbody.gravityScale = 0f;
         playerMove.isSpaceOn = true;
         
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(playerData.getDashDuration);
         
         playerMove.isWallJumping = false;
         playerMove.isSpaceOn = false;
+        playerMove.Rigidbody.velocity = Vector2.zero;
+        playerMove.Rigidbody.gravityScale = 1.4f;
     }
 }
