@@ -5,19 +5,29 @@ using UnityEngine;
 
 public class SpringPlatform : MonoBehaviour
 {
-    private float jumpForce = 8f;
+    private float jumpForce = 9f;
+    
     private GameObject playerObj;
+    private Rigidbody2D playerRb;
     
     private void Start()
     {
         playerObj = GameObject.FindWithTag("Player");
+        playerRb = playerObj.GetComponent<Rigidbody2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            playerObj.GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            StartCoroutine("Spring");
         }
+    }
+
+    IEnumerator Spring()
+    {
+        playerRb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.05f);
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
     }
 }
