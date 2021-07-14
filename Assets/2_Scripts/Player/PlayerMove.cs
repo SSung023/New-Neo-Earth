@@ -70,6 +70,7 @@ public class PlayerMove : MonoBehaviour
         if (!isWallJumping && !isSpaceOn)
         {
             Move();
+            Dash();
         }
 
         if (isGround)
@@ -128,18 +129,19 @@ public class PlayerMove : MonoBehaviour
 
     private void Dash() // 미완성
     {
-        dashVector = new Vector2(horizontalMove, verticalMove);
-        //Debug.Log(dashVector);
-
         if (curDashTime <= 0)
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                Debug.Log("dash");
+                // SetDashVector();
+                coroutineStart = true;
+                
+                rigidbody.velocity = Vector2.zero;
                 // AddForce나 velocity 중 하나 선택
                 //rigidbody.AddForce(dashVector * dashForce, ForceMode2D.Impulse);
                 rigidbody.velocity = dashVector * dashForce;
                 
+                Debug.Log("dashVector : " + dashVector);
                 curDashTime = dashCoolTime;
             }
         }
@@ -148,7 +150,7 @@ public class PlayerMove : MonoBehaviour
             curDashTime -= Time.deltaTime;
         }
     }
-    
+
     private void UpdateValue()
     {
         // horizontalMove, VerticalMove, isGround 값 업데이트
@@ -157,7 +159,13 @@ public class PlayerMove : MonoBehaviour
 
         isGround = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask_ground);
         
+        SetDashVector();
         CheckSight();
+    }
+
+    private void SetDashVector()
+    {
+        dashVector = new Vector2(horizontalMove, verticalMove);
     }
 
     private void CheckWall()

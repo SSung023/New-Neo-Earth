@@ -92,7 +92,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         playerMove.isWallJumping = false;
         playerMove.isSpaceOn = false;
-
-        Debug.Log("0.3초 후에 isWallJumping을 false로 바꿈");
     }
 }
