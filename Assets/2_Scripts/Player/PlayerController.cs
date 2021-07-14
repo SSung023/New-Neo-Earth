@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMove playerMove;
     
     private Transform[] wallCheckTransform;
-
+    
     private bool isAlive;
     private int curHealth;
 
@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
         RestartGame();
     }
     
