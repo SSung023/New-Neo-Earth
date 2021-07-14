@@ -12,9 +12,8 @@ public class MovingPlatform : MonoBehaviour
 
     [Header("Positions")]
     [SerializeField] protected Transform startPos;
-    [SerializeField] protected Transform pos1;
-    [SerializeField] protected Transform pos2;
-    
+    [SerializeField] protected Transform goalPos;
+
     private Vector3 _nextPos;
 
     private void FixedUpdate()
@@ -23,12 +22,14 @@ public class MovingPlatform : MonoBehaviour
         
         if (isMoving)
         {
-            MovePlatform();
+            StartCoroutine("MovePlatform");
         }
     }
 
-    void MovePlatform()
+    IEnumerator MovePlatform()
     {
+        yield return new WaitForSeconds(delayTime);
+        
         //목표지점까지 current 지점을 직선이동
         transform.position = Vector3.MoveTowards(transform.position, _nextPos, goSpeed * Time.deltaTime);
         
@@ -37,16 +38,16 @@ public class MovingPlatform : MonoBehaviour
             isMoving = false;
         }
     }
-    
+
     void SetNextPosition()
     {
-        if (gameObject.transform.position == pos1.position)
+        if (gameObject.transform.position == startPos.position)
         {
-            _nextPos = pos2.position;
+            _nextPos = goalPos.position;
         }
-        else if (gameObject.transform.position == pos2.position)
+        else if (gameObject.transform.position == goalPos.position)
         {
-            _nextPos = pos1.position;
+            _nextPos = startPos.position;
         }
     }
 

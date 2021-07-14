@@ -404,6 +404,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.06878495, y: 1.0113573}
   m_EdgeRadius: 0
+--- !u!4 &642815799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 639031088508554825, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
+  m_PrefabInstance: {fileID: 639031088170594767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &660509831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,6 +1397,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 697720981811362996, guid: ef3638e8757e08f4c9124cc118fe4203, type: 3}
   m_PrefabInstance: {fileID: 697720980862015050}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1552632393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4447160895485036451, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
+  m_PrefabInstance: {fileID: 4447160894979784996}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1647672403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4624512544597846779, guid: 1e0a7e21cc5b1a34892923f740cecc7a, type: 3}
@@ -2132,6 +2142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moving Platform_1
       objectReference: {fileID: 0}
+    - target: {fileID: 639031088393766564, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
+      propertyPath: goalPos
+      value: 
+      objectReference: {fileID: 642815799}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
 --- !u!1001 &697720980862015050
@@ -2380,6 +2394,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4447160895394390722, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
+      propertyPath: goalPos
+      value: 
+      objectReference: {fileID: 1552632393}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
 --- !u!1001 &4624512544095262376
