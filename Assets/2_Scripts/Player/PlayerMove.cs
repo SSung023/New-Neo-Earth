@@ -25,10 +25,11 @@ public class PlayerMove : MonoBehaviour
 
     private float horizontalMove;
     private float verticalMove;
-    private float isSightRight;
+    [HideInInspector] public float isSightRight;
 
     private const float groundCheckDist = 0.9f;
-    private const float wallCheckDist = 0.1f;
+    private const float wallCheckWidth = 0.1f;
+    private const float wallCheckHeight = 0.8f;
     
     
     private bool isWalking;
@@ -177,13 +178,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (isSightRight == 1)
         {
-            isWall = Physics2D.Raycast(wallCheckTransform_r.position, Vector2.right, wallCheckDist, layerMask_wall);
-            Debug.DrawRay(wallCheckTransform_r.position, Vector3.right * wallCheckDist, Color.cyan);
+            isWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(wallCheckWidth, wallCheckHeight), 0, layerMask_wall);
         }
         else if(isSightRight == -1)
         {
-            isWall = Physics2D.Raycast(wallCheckTransform_l.position, Vector2.left, wallCheckDist, layerMask_wall);
-            Debug.DrawRay(wallCheckTransform_l.position, Vector3.left * wallCheckDist, Color.cyan);
+            isWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(wallCheckWidth, wallCheckHeight), 0, layerMask_wall);
         }
     }
     
@@ -199,7 +198,6 @@ public class PlayerMove : MonoBehaviour
             isSightRight = -1;
         }
     }
-    
 
     // Getters & Setters
     public Rigidbody2D Rigidbody

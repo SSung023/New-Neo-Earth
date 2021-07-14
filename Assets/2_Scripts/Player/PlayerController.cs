@@ -111,4 +111,18 @@ public class PlayerController : MonoBehaviour
         playerMove.Rigidbody.velocity = Vector2.zero;
         playerMove.Rigidbody.gravityScale = 1.4f;
     }
+    
+    // Debug
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        if (playerMove.isSightRight == 1)
+        {
+            Gizmos.DrawWireCube(wallCheckTransform[0].position, new Vector2(0.1f, 0.8f));
+        }
+        else if(playerMove.isSightRight == -1)
+        {
+            Gizmos.DrawWireCube(wallCheckTransform[1].position, new Vector2(0.1f, 0.8f));
+        }
+    }
 }
