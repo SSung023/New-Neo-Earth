@@ -2146,6 +2146,10 @@ PrefabInstance:
       propertyPath: goalPos
       value: 
       objectReference: {fileID: 642815799}
+    - target: {fileID: 639031088393766565, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
 --- !u!1001 &697720980862015050
@@ -2393,6 +2397,10 @@ PrefabInstance:
     - target: {fileID: 4447160894821882373, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447160895394390721, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 4447160895394390722, guid: 2d0b977741b3b3f4dbe113e84165b5d7, type: 3}
       propertyPath: goalPos
