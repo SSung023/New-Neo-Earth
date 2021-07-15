@@ -11,10 +11,10 @@ public class HologramManager : MonoBehaviour
     private void Start()
     {
         dpHologram = false;
-        hologramObj = GameObject.FindWithTag("Hologram On");
+        hologramObj = transform.GetChild(0).gameObject;
     }
-
-    private void FixedUpdate()
+    
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
