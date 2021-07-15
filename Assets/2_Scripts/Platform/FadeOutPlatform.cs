@@ -30,6 +30,8 @@ public class FadeOutPlatform : MonoBehaviour
             
             if(cnt == 1)
                 StartCoroutine(FadeOut());
+            else
+                StopCoroutine(FadeOut());
         }
     }
 
@@ -49,6 +51,7 @@ public class FadeOutPlatform : MonoBehaviour
             yield return new WaitForSeconds(fadeOutSpeed);
         }
         
+        /*
         yield return new WaitForSeconds(coolTime);
         
         spriteRenderer.color = new Color(1,1,1,1);
@@ -56,5 +59,6 @@ public class FadeOutPlatform : MonoBehaviour
         wallCheck.SetActive(true);
         
         cnt = 0;
+        */
     }
 }
