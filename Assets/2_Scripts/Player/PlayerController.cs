@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         playerMove.isWallJumping = false;
         playerMove.isSpaceOn = false;
         playerMove.Rigidbody.velocity = Vector2.zero;
-        playerMove.Rigidbody.gravityScale = 1.4f;
+        playerMove.Rigidbody.gravityScale = 1.6f;
     }
     
     // Debug

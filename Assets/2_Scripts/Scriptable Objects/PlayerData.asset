@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070e0460018b29c4695e091a57177428, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 3
   slidingSpeed: 0.01
   maxHp: 5
   jumpForce: 8

@@ -50,7 +50,7 @@ public class FallingPlatform : MonoBehaviour
     private IEnumerator StandbyAndDrop()
     {
         yield return new WaitForSeconds(standbyTime);
-        transform.DOMove(landingPos.position, 0.3f).SetEase(Ease.InQuart);
+        transform.DOMove(landingPos.position, 0.2f).SetEase(Ease.InQuart);
     }
     
     
