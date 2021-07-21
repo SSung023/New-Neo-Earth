@@ -16,7 +16,7 @@ public class HologramManager : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log(dpHologram);
             dpHologram = !dpHologram;
