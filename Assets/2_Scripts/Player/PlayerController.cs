@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     private PlayerMove playerMove;
     
     private Transform[] wallCheckTransform;
+
+    //private GameManager _gameManager;
     
     private bool isAlive;
     private int curHealth;
-
+    private int curScene;
     
     
     
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         isAlive = true;
         curHealth = playerData.getMaxHp;
-
+        
     }
     private void Update()
     {
@@ -82,9 +84,11 @@ public class PlayerController : MonoBehaviour
     // 임시로 넣은 기능. R키를 누르면 재시작
     private void RestartGame()
     {
+        curScene = SceneManager.GetActiveScene().buildIndex;
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(curScene);
         }
     }
 

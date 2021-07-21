@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public enum State {MainMenu = 0, inGame = 1, Pause = 2, GameOver = 3 };
-    
+
+    private Scene _scene;
     private State GameState = State.inGame;
     public static GameManager instance = null;
-
+    
 
     private void Awake()
     {
@@ -25,7 +27,12 @@ public class GameManager : MonoBehaviour
 
         InitGame();
     }
-    
+
+    private void Update()
+    {
+        _scene = SceneManager.GetActiveScene();
+    }
+
     private void InitGame()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
