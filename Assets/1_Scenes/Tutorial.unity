@@ -8563,7 +8563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 888799573}
   - component: {fileID: 888799572}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8786,7 +8786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1275414781}
   - component: {fileID: 1275414782}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9304,7 +9304,7 @@ GameObject:
   - component: {fileID: 2066468235}
   - component: {fileID: 2066468234}
   - component: {fileID: 2066468233}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12618,7 +12618,7 @@ GameObject:
   - component: {fileID: 2113170198}
   - component: {fileID: 2113170197}
   - component: {fileID: 2113170196}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: trap2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12986,11 +12986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.5
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -24.6
+      value: -21.3
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.z
