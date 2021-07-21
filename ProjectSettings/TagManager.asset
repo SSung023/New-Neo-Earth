@@ -47,6 +47,9 @@ TagManager:
   - name: Platform
     uniqueID: 3336236829
     locked: 0
+  - name: Hologram
+    uniqueID: 1266479765
+    locked: 0
   - name: Objects
     uniqueID: 3971903975
     locked: 0
