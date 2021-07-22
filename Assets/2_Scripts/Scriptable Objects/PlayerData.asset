@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070e0460018b29c4695e091a57177428, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   slidingSpeed: 0.87
   maxHp: 5
   jumpForce: 9
-  dashForce: 12
+  dashForce: 11
   dashCoolTime: 0.7
   dashDuration: 0.225
   layerMask_ground:
