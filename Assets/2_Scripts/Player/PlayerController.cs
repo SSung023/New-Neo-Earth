@@ -112,6 +112,20 @@ public class PlayerController : MonoBehaviour
         playerMove.isWallJumping = false;
         playerMove.isSpaceOn = false;
         playerMove.Rigidbody.velocity = Vector2.zero;
+
+        StartCoroutine(controlGravity());
+    }
+
+    IEnumerator controlGravity()
+    {
+        float releaseTime = 0.6f;
+        for (float i = releaseTime; i >= 0; i--)
+        {
+            float alpha = i / releaseTime;
+            playerMove.Rigidbody.gravityScale = alpha;
+        }
+
+        yield return new WaitForSeconds(1f);
         playerMove.Rigidbody.gravityScale = 1.6f;
     }
     
