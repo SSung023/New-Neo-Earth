@@ -13,7 +13,7 @@ public class PlayerMove : MonoBehaviour
     private Transform transform;
     private readonly Transform wallCheckTransform_r;
     private readonly Transform wallCheckTransform_l;
-    private Vector2 dashVector;
+    [HideInInspector] public Vector2 dashVector;
 
     private readonly float speed;
     private readonly float slidingSpeed;

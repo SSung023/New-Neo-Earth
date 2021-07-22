@@ -15,9 +15,9 @@ MonoBehaviour:
   speed: 3
   slidingSpeed: 0.87
   maxHp: 5
-  jumpForce: 8
+  jumpForce: 9
   dashForce: 12
-  dashCoolTime: 1
+  dashCoolTime: 0.7
   dashDuration: 0.225
   layerMask_ground:
     serializedVersion: 2

@@ -109,24 +109,29 @@ public class PlayerController : MonoBehaviour
         
         yield return new WaitForSeconds(playerData.getDashDuration);
         
-        playerMove.isWallJumping = false;
-        playerMove.isSpaceOn = false;
-        playerMove.Rigidbody.velocity = Vector2.zero;
-
+        // 여기서 velocity 변경
+        playerMove.Rigidbody.velocity = new Vector2(playerMove.dashVector.x * 5f, playerMove.dashVector.y);
+        // yield return new WaitForSeconds(playerData.getDashDuration);
+        
         StartCoroutine(controlGravity());
+        
+        // playerMove.isWallJumping = false;
+        // playerMove.isSpaceOn = false;
     }
 
     IEnumerator controlGravity()
     {
-        float releaseTime = 0.6f;
-        for (float i = releaseTime; i >= 0; i--)
+        // playerMove.Rigidbody.gravityScale = 0.8f;
+        for (float i = 1.7f; i < 2f; i++)
         {
-            float alpha = i / releaseTime;
-            playerMove.Rigidbody.gravityScale = alpha;
+            playerMove.Rigidbody.gravityScale = i;
+            yield return new WaitForSeconds(0.07f);
         }
+        
+        yield return new WaitForSeconds(0.75f);
 
-        yield return new WaitForSeconds(1f);
-        playerMove.Rigidbody.gravityScale = 1.6f;
+        playerMove.isWallJumping = false;
+        playerMove.isSpaceOn = false;
     }
     
     // Debug
