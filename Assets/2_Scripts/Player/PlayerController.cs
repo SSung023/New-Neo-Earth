@@ -95,28 +95,23 @@ public class PlayerController : MonoBehaviour
     IEnumerator changeValue()
     {
         playerMove.wallCoroutineStart = false;
-        playerMove.isSpaceOn = true;
+        playerMove.canBasicMove = false;
         yield return new WaitForSeconds(0.3f);
         playerMove.isWallJumping = false;
-        playerMove.isSpaceOn = false;
+        playerMove.canBasicMove = true;
     }
 
     IEnumerator controlRigid()
     {
         playerMove.dashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
-        playerMove.isSpaceOn = true;
+        playerMove.canBasicMove = false;
         
         yield return new WaitForSeconds(playerData.getDashDuration);
         
         // 여기서 velocity 변경
         playerMove.Rigidbody.velocity = new Vector2(playerMove.dashVector.x * 5f, playerMove.dashVector.y);
-        // yield return new WaitForSeconds(playerData.getDashDuration);
-        
         StartCoroutine(controlGravity());
-        
-        // playerMove.isWallJumping = false;
-        // playerMove.isSpaceOn = false;
     }
 
     IEnumerator controlGravity()
@@ -131,7 +126,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         playerMove.isWallJumping = false;
-        playerMove.isSpaceOn = false;
+        playerMove.canBasicMove = true;
     }
     
     // Debug

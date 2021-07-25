@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     private bool isWall; // 벽타기 유무
     private bool isGround;
     [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
-    [HideInInspector] public bool isSpaceOn = false;
+    [HideInInspector] public bool canBasicMove = true; // 동작이 가능한가의 여부
     [HideInInspector] public bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
     [HideInInspector] public bool dashCoroutineStart = false;
     
@@ -65,12 +65,12 @@ public class PlayerMove : MonoBehaviour
     {
         UpdateValue();
 
-        if (!isSpaceOn)
+        if (canBasicMove)
         {
             CheckWall();
         }
 
-        if (!isWallJumping && !isSpaceOn)
+        if (!isWallJumping && canBasicMove)
         {
             Move();
             Dash();
@@ -104,12 +104,12 @@ public class PlayerMove : MonoBehaviour
     private void WallMove()
     {
         isWallJumping = false;
-        if (!isSpaceOn)
+        if (canBasicMove)
         {
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isSpaceOn)
+        if (Input.GetKeyDown(KeyCode.Space) && canBasicMove)
         {
             if (!isWallJumping)
             {
@@ -132,6 +132,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Dash() // 미완성
     {
+        
         if (curDashTime <= 0)
         {
             if (Input.GetKeyDown(KeyCode.Z))
@@ -162,6 +163,11 @@ public class PlayerMove : MonoBehaviour
         
         SetDashVector();
         CheckSight();
+    }
+
+    private void checkGround()
+    {
+        
     }
 
     private void SetDashVector()
