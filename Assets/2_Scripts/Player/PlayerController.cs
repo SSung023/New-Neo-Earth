@@ -94,29 +94,32 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator changeValue()
     {
+        // 벽에서 점프했을 때 실행되는 코루틴
+        // 일정 시간동안 플레이어의 조작을 막아서 벽 점프가 정상적으로 실행되도록 한다
         playerMove.wallCoroutineStart = false;
-        playerMove.canBasicMove = false;
+        playerMove.CanBasicMove = false;
         yield return new WaitForSeconds(0.3f);
-        playerMove.isWallJumping = false;
-        playerMove.canBasicMove = true;
+        playerMove.IsWallJumping = false;
+        playerMove.CanBasicMove = true;
     }
 
     IEnumerator controlRigid()
     {
+        // 대쉬를 했을 때 실행되는 코루틴
+        // 일정시간 동안 중력을 0으로 설정 & 대쉬가 끝나면 자연스럽게 떨어지도록 속도 설정
         playerMove.dashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
-        playerMove.canBasicMove = false;
+        playerMove.CanBasicMove = false;
         
         yield return new WaitForSeconds(playerData.getDashDuration);
         
         // 여기서 velocity 변경
-        playerMove.Rigidbody.velocity = new Vector2(playerMove.dashVector.x * 5f, playerMove.dashVector.y);
+        playerMove.Rigidbody.velocity = new Vector2(playerMove.DashVector.x * 5f, playerMove.DashVector.y);
         StartCoroutine(controlGravity());
     }
 
     IEnumerator controlGravity()
     {
-        // playerMove.Rigidbody.gravityScale = 0.8f;
         for (float i = 1.7f; i < 2f; i++)
         {
             playerMove.Rigidbody.gravityScale = i;
@@ -125,8 +128,8 @@ public class PlayerController : MonoBehaviour
         
         yield return new WaitForSeconds(0.75f);
 
-        playerMove.isWallJumping = false;
-        playerMove.canBasicMove = true;
+        playerMove.IsWallJumping = false;
+        playerMove.CanBasicMove = true;
     }
     
     // Debug

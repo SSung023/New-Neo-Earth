@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -13,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     private Transform transform;
     private readonly Transform wallCheckTransform_r;
     private readonly Transform wallCheckTransform_l;
-    [HideInInspector] public Vector2 dashVector;
+    private Vector2 dashVector;
 
     private readonly float speed;
     private readonly float slidingSpeed;
@@ -21,22 +22,23 @@ public class PlayerMove : MonoBehaviour
     private readonly float dashForce;
     private readonly float dashCoolTime; // const
     private float curDashTime; // 쿨타임에 사용될 변수
+    private int dashCnt;
     
 
     private float horizontalMove;
     private float verticalMove;
     [HideInInspector] public float isSightRight;
 
-    private const float groundCheckDist = 0.9f;
-    private const float wallCheckWidth = 0.1f;
-    private const float wallCheckHeight = 0.8f;
+    private const float GroundCheckDist = 0.9f;
+    private const float WallCheckWidth = 0.1f;
+    private const float WallCheckHeight = 0.8f;
     
     
     private bool isWalking;
     private bool isWall; // 벽타기 유무
     private bool isGround;
-    [HideInInspector] public bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
-    [HideInInspector] public bool canBasicMove = true; // 동작이 가능한가의 여부
+    private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
+    private bool canBasicMove = true; // 동작이 가능한가의 여부
     [HideInInspector] public bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
     [HideInInspector] public bool dashCoroutineStart = false;
     
@@ -130,27 +132,38 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Dash() // 미완성
+    private void Dash()
     {
-        
-        if (curDashTime <= 0)
+        // 땅에 닿아있을 때 or 아직 대쉬 기회가 남아있을 때
+        if (isGround || (!isGround && dashCnt == 1))
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                // SetDashVector();
-                dashCoroutineStart = true;
-
                 rigidbody.velocity = Vector2.zero;
                 rigidbody.velocity = dashVector * dashForce;
-                
-                Debug.Log("dashVector : " + dashVector);
-                curDashTime = dashCoolTime;
+                dashCoroutineStart = true;
+                dashCnt--;
             }
         }
-        else
-        {
-            curDashTime -= Time.deltaTime;
-        }
+
+        // if (curDashTime <= 0)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.Z))
+        //     {
+        //         // SetDashVector();
+        //         rigidbody.velocity = Vector2.zero;
+        //         rigidbody.velocity = dashVector * dashForce;
+        //         dashCoroutineStart = true;
+        //         dashCnt--;
+        //         
+        //         Debug.Log("dashVector : " + dashVector);
+        //         curDashTime = dashCoolTime;
+        //     }
+        // }
+        // else
+        // {
+        //     curDashTime -= Time.deltaTime;
+        // }
     }
 
     private void UpdateValue()
@@ -159,17 +172,12 @@ public class PlayerMove : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
 
-        isGround = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, layerMask_ground);
+        isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
+        if (isGround) dashCnt = 1;
         
         SetDashVector();
         CheckSight();
     }
-
-    private void checkGround()
-    {
-        
-    }
-
     private void SetDashVector()
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
@@ -184,11 +192,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (isSightRight == 1)
         {
-            isWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(wallCheckWidth, wallCheckHeight), 0, layerMask_wall);
+            isWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
         }
         else if(isSightRight == -1)
         {
-            isWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(wallCheckWidth, wallCheckHeight), 0, layerMask_wall);
+            isWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
         }
     }
     
@@ -205,10 +213,28 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    
+    
     // Getters & Setters
     public Rigidbody2D Rigidbody
     {
         get => rigidbody;
         set => rigidbody = value;
+    }
+    public Vector2 DashVector
+    {
+        get => dashVector;
+        set => dashVector = value;
+    }
+    public bool CanBasicMove
+    {
+        get => canBasicMove;
+        set => canBasicMove = value;
+    }
+
+    public bool IsWallJumping
+    {
+        get => isWallJumping;
+        set => isWallJumping = value;
     }
 }
