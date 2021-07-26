@@ -106,30 +106,26 @@ public class PlayerController : MonoBehaviour
     IEnumerator controlRigid()
     {
         // 대쉬를 했을 때 실행되는 코루틴
-        // 일정시간 동안 중력을 0으로 설정 & 대쉬가 끝나면 자연스럽게 떨어지도록 속도 설정
+        // 일정시간 동안 중력을 0으로 설정 & 대쉬가 끝나면 자연스럽게 떨어지도록 중력 설정
         playerMove.dashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
         playerMove.CanBasicMove = false;
         
         yield return new WaitForSeconds(playerData.getDashDuration);
         
-        // 여기서 velocity 변경
-        playerMove.Rigidbody.velocity = new Vector2(playerMove.DashVector.x * 5f, playerMove.DashVector.y);
+        playerMove.IsWallJumping = false;
+        playerMove.CanBasicMove = true;
+        playerMove.Rigidbody.velocity = new Vector2(playerMove.DashVector.x * 5f, 0);
         StartCoroutine(controlGravity());
     }
 
     IEnumerator controlGravity()
     {
-        for (float i = 1.7f; i < 2f; i++)
-        {
-            playerMove.Rigidbody.gravityScale = i;
-            yield return new WaitForSeconds(0.07f);
-        }
-        
-        yield return new WaitForSeconds(0.75f);
-
-        playerMove.IsWallJumping = false;
-        playerMove.CanBasicMove = true;
+        playerMove.Rigidbody.gravityScale = 1.1f;
+        yield return new WaitForSeconds(0.1f);
+        playerMove.Rigidbody.gravityScale = 1.2f;
+        yield return new WaitForSeconds(0.2f);
+        playerMove.Rigidbody.gravityScale = 2f;
     }
     
     // Debug

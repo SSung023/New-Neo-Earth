@@ -66,11 +66,7 @@ public class PlayerMove : MonoBehaviour
     public void UpdateMovement()
     {
         UpdateValue();
-
-        if (canBasicMove)
-        {
-            CheckWall();
-        }
+        CheckWall();
 
         if (!isWallJumping && canBasicMove)
         {
@@ -145,25 +141,6 @@ public class PlayerMove : MonoBehaviour
                 dashCnt--;
             }
         }
-
-        // if (curDashTime <= 0)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.Z))
-        //     {
-        //         // SetDashVector();
-        //         rigidbody.velocity = Vector2.zero;
-        //         rigidbody.velocity = dashVector * dashForce;
-        //         dashCoroutineStart = true;
-        //         dashCnt--;
-        //         
-        //         Debug.Log("dashVector : " + dashVector);
-        //         curDashTime = dashCoolTime;
-        //     }
-        // }
-        // else
-        // {
-        //     curDashTime -= Time.deltaTime;
-        // }
     }
 
     private void UpdateValue()
