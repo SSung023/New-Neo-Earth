@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         
         playerMove.IsWallJumping = false;
         playerMove.CanBasicMove = true;
-        playerMove.Rigidbody.velocity = new Vector2(playerMove.DashVector.x * 5f, 0);
+        playerMove.Rigidbody.velocity = new Vector2(playerMove.DashVector.x * 3f, 0);
         StartCoroutine(controlGravity());
     }
 
