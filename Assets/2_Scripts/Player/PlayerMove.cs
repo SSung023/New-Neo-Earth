@@ -117,7 +117,7 @@ public class PlayerMove : MonoBehaviour
             {
                 isWallJumping = true;
                 wallCoroutineStart = true;
-                rigidbody.velocity = new Vector2(-1f * isSightRight, 1.75f) * (jumpForce * 0.5f);
+                rigidbody.velocity = new Vector2(-1f * isSightRight, 2.5f) * (jumpForce * 0.5f);
             }
         }
     }
