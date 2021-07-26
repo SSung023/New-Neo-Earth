@@ -38,6 +38,7 @@ public class PlayerMove : MonoBehaviour
     private bool isWall; // 벽타기 유무
     private bool isGround;
     private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
+    private bool exceptionalMove;
     private bool canBasicMove = true; // 동작이 가능한가의 여부
     [HideInInspector] public bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
     [HideInInspector] public bool dashCoroutineStart = false;
@@ -93,9 +94,16 @@ public class PlayerMove : MonoBehaviour
             isWalking = true;
             if (isGround)
             {
+                // 땅에 닿아 있을 때
                 PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
+                rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
             }
-            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+            // else if(exceptionalMove)
+            // {
+            //     // dash, wall jump 후 체공 시
+            //     
+            // }
+            rigidbody.velocity = new Vector2(horizontalMove * (speed * 0.6f), rigidbody.velocity.y);
         }
         else
         {
@@ -219,5 +227,11 @@ public class PlayerMove : MonoBehaviour
     {
         get => isWallJumping;
         set => isWallJumping = value;
+    }
+
+    public bool ExceptionalMove
+    {
+        get => exceptionalMove;
+        set => exceptionalMove = value;
     }
 }
