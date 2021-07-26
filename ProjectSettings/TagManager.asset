@@ -8,6 +8,7 @@ TagManager:
   - Moving Platform
   - Hologram On
   - CameraBound
+  - AudioSource
   layers:
   - Default
   - TransparentFX
