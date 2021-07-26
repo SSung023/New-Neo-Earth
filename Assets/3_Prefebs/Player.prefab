@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 1177366221737286630}
   - component: {fileID: 1177366221737286629}
   - component: {fileID: -4305149685212702687}
+  - component: {fileID: 1873064231708326378}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -323,6 +324,49 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1873064231708326378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177366221737286627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2900f2075d8824aaa1fefd09fea250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsConcrete:
+  - {fileID: 8300000, guid: 74ac0a0e23a18f7459e35b179c561f25, type: 3}
+  - {fileID: 8300000, guid: 3ef7ea44efff97f4a9235f37a69ec7cb, type: 3}
+  - {fileID: 8300000, guid: 97796fb067632c145b4461c86b2a13ee, type: 3}
+  - {fileID: 8300000, guid: dbdea65ee9e6ab344ae6d163a4150c01, type: 3}
+  - {fileID: 8300000, guid: 72289539ec229ca4db232165aa3f3a62, type: 3}
+  - {fileID: 8300000, guid: a972464a0d2001746ba96cc1fef94fca, type: 3}
+  - {fileID: 8300000, guid: 592b8636a93ca2b4b99c5434772e8b0e, type: 3}
+  - {fileID: 8300000, guid: 69dcd25fa47e1504d8741d4464209eea, type: 3}
+  footstepsConcreteLand:
+  - {fileID: 8300000, guid: 49a8b45d9238b324283212ec6632e4b2, type: 3}
+  - {fileID: 8300000, guid: 1e820dd7ea216354fbdcf1ee497f72cb, type: 3}
+  footstepsWater:
+  - {fileID: 8300000, guid: 68f8dc2e2a9513245bf672d7c43ba7cb, type: 3}
+  - {fileID: 8300000, guid: a5e89efbbd4322c43ba454779e50b626, type: 3}
+  - {fileID: 8300000, guid: 4dbb754cb04b3bf49bbaccf75c67b8bf, type: 3}
+  - {fileID: 8300000, guid: cb5c1b05c6660714e8eeab66adc349e9, type: 3}
+  - {fileID: 8300000, guid: 231c811a4ed6f1e43b5ddf5684fcf8a0, type: 3}
+  - {fileID: 8300000, guid: f407d38460c395e4791f80eca744c727, type: 3}
+  - {fileID: 8300000, guid: 886d760d55d79594880c57222b54acdf, type: 3}
+  - {fileID: 8300000, guid: 2a6682013e495ab4e815301c1569b4df, type: 3}
+  footstepsWaterLand:
+  - {fileID: 8300000, guid: 734d777212cf30347b4ed070064922e7, type: 3}
+  jumpClip:
+  - {fileID: 8300000, guid: abf90e25a44b18149954acf48759d05b, type: 3}
+  - {fileID: 8300000, guid: 3b67cdb82c0b8934a97f7f6879418f84, type: 3}
+  - {fileID: 8300000, guid: d183dbb7fc4aa644aa36bf88521d4bd6, type: 3}
+  - {fileID: 8300000, guid: dce170d14a0e7cb499cb916bf2d34617, type: 3}
+  walkSpan: 0.4
+  walkAcctime: 1
+  walkDectime: 1
 --- !u!1 &2278087583666141783
 GameObject:
   m_ObjectHideFlags: 0

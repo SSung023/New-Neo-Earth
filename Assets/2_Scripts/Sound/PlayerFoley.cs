@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerFoley : MonoBehaviour
 {
+    public static PlayerFoley playerFoley;
+
     AudioSource aud;
     PlayerMove playerMove;
 
@@ -17,6 +19,8 @@ public class PlayerFoley : MonoBehaviour
     [SerializeField]
     AudioClip[] footstepsWaterLand;
 
+    [SerializeField]
+    AudioClip[] jumpClip;
 
     public float walkSpan = 0.4f; // 한 발 딛고 다음 발 딛을 때 까지의 시간
     public float walkAcctime = 1.0f; // 발걸음을 시작해서 완전히 가속될 때까지 걸리는 시간
@@ -24,19 +28,17 @@ public class PlayerFoley : MonoBehaviour
 
     private float pitch = 1.0f;
 
-    void Start()
+    private bool walkSoundPlay = false;
+
+    private void Start()
     {
+        playerFoley = this;
         aud = GetComponent<AudioSource>();
         playerMove = GetComponent<PlayerMove>();
     }
 
-    void Update()
-    {
-        
-    }
-
     // 현재 땅에 착지한 상태인지, 바닥의 재질은 어떠한지에 따라 다른 발소리를 재생함
-    private void PlayFootstep(string material, bool land)
+    public void PlayFootstep(string material, bool land)
     {
         AudioClip[] clips;
         switch (material)
@@ -71,9 +73,29 @@ public class PlayerFoley : MonoBehaviour
         }
     }
 
+    // 현재 땅에 착지한 상태인지, 바닥의 재질은 어떠한지에 따라 다른 발소리를 재생함
+    public void PlayJump()
+    {
+        if (jumpClip != null)
+        {
+            int i = Random.Range(0, jumpClip.Length);
+            pitch = Random.Range(0.9f, 1.1f);
+
+            aud.clip = jumpClip[i];
+            aud.pitch = pitch;
+
+            aud.Play();
+        }
+    }
+
     IEnumerator FootstepSound()
     {
-        PlayFootstep("Concrete", false);
-        yield return new WaitForSeconds(walkSpan);
+        if (!walkSoundPlay)
+        {
+            walkSoundPlay = true;
+            PlayFootstep("Concrete", false);
+            yield return new WaitForSeconds(walkSpan);
+            walkSoundPlay = false;
+        }
     }
 }
