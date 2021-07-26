@@ -91,6 +91,10 @@ public class PlayerMove : MonoBehaviour
         if (horizontalMove != 0)
         {
             isWalking = true;
+            if (isGround)
+            {
+                PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
+            }
             rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
         }
         else
@@ -122,6 +126,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            PlayerFoley.playerFoley.PlayJump(); // 점프 소리 재생
+
             // AddForce나 velocity 중 하나 선택
             //rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             rigidbody.velocity = Vector2.up * jumpForce;
