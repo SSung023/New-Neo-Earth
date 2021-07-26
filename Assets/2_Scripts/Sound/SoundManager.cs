@@ -5,19 +5,8 @@ using UnityEngine.Audio;
 
 namespace SoundManager
 {
-    enum Type { mus, sfx, amb, uix };
 
-    // 오디오클립을 받는 클래스
-    [SerializeField]
-    class AudioclipBank
-    {
-        AudioClip[] musClips, sfxClips, ambClips, uixClips;
-
-        public AudioClip[] GetClips(Type type)
-        {
-            return musClips;
-        }
-    }
+    public enum AudioType { mus, sfx, amb, uix };
 
     public class SoundManager : MonoBehaviour
     {
@@ -29,7 +18,7 @@ namespace SoundManager
 
         AudioMixer audioMixer; // 마스터 믹서
 
-        AudioclipBank bank = new AudioclipBank();
+        AudioclipBank bank;
 
         private void Awake()
         {
@@ -57,6 +46,8 @@ namespace SoundManager
                 }
                 count++;
             }
+
+            bank = GetComponent<AudioclipBank>();
         }
         
     }
