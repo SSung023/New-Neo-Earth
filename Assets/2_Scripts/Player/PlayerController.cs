@@ -40,13 +40,13 @@ public class PlayerController : MonoBehaviour
         {
             playerMove.UpdateMovement();
             
-            if (playerMove.wallCoroutineStart)
+            if (playerMove.WallCoroutineStart)
             {
-                StartCoroutine(changeValue());
+                StartCoroutine(wallJump_changeValue());
             }
-            if (playerMove.dashCoroutineStart)
+            if (playerMove.DashCoroutineStart)
             {
-                StartCoroutine(controlRigid());
+                StartCoroutine(dash_controlRigid());
             }
         }
 
@@ -92,24 +92,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator changeValue()
+    IEnumerator wallJump_changeValue()
     {
         // 벽에서 점프했을 때 실행되는 코루틴
         // 일정 시간동안 플레이어의 조작을 막아서 벽 점프가 정상적으로 실행되도록 한다
-        playerMove.wallCoroutineStart = false;
+        playerMove.WallCoroutineStart = false;
         playerMove.CanBasicMove = false;
+        playerMove.IsParkourDoing = true; // 특수 동작 체공 상태 true
+        
         yield return new WaitForSeconds(0.3f);
+        
         playerMove.IsWallJumping = false;
         playerMove.CanBasicMove = true;
     }
 
-    IEnumerator controlRigid()
+    IEnumerator dash_controlRigid()
     {
         // 대쉬를 했을 때 실행되는 코루틴
         // 일정시간 동안 중력을 0으로 설정 & 대쉬가 끝나면 자연스럽게 떨어지도록 중력 설정
-        playerMove.dashCoroutineStart = false;
+        playerMove.DashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
         playerMove.CanBasicMove = false;
+        playerMove.IsParkourDoing = true;
         
         yield return new WaitForSeconds(playerData.getDashDuration);
         
@@ -132,11 +136,11 @@ public class PlayerController : MonoBehaviour
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        if (playerMove.isSightRight == 1)
+        if (playerMove.IsSightRight == 1)
         {
             Gizmos.DrawWireCube(wallCheckTransform[0].position, new Vector2(0.1f, 0.8f));
         }
-        else if(playerMove.isSightRight == -1)
+        else if(playerMove.IsSightRight == -1)
         {
             Gizmos.DrawWireCube(wallCheckTransform[1].position, new Vector2(0.1f, 0.8f));
         }

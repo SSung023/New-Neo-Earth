@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
 
     private readonly float speed;
     private readonly float slidingSpeed;
+    private readonly float floatingSpeed;
     private readonly float jumpForce;
     private readonly float dashForce;
     private readonly float dashCoolTime; // const
@@ -27,7 +28,7 @@ public class PlayerMove : MonoBehaviour
 
     private float horizontalMove;
     private float verticalMove;
-    [HideInInspector] public float isSightRight;
+    private float isSightRight;
 
     private const float GroundCheckDist = 0.9f;
     private const float WallCheckWidth = 0.1f;
@@ -38,10 +39,10 @@ public class PlayerMove : MonoBehaviour
     private bool isWall; // 벽타기 유무
     private bool isGround;
     private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
-    private bool exceptionalMove;
+    private bool isParkourDoing; // 특수 동작? 대쉬, 벽점프 중인가의 여부
     private bool canBasicMove = true; // 동작이 가능한가의 여부
-    [HideInInspector] public bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
-    [HideInInspector] public bool dashCoroutineStart = false;
+    private bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+    private bool dashCoroutineStart = false;
     
     public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
@@ -49,6 +50,7 @@ public class PlayerMove : MonoBehaviour
         
         this.speed = playerData.getSpeed;
         this.slidingSpeed = playerData.getSlidingSpeed;
+        this.floatingSpeed = playerData.getFloatingSpeed;
         this.jumpForce = playerData.getJumpForce;
         this.dashForce = playerData.getDashForce;
         this.dashCoolTime = playerData.getDashCoolTime;
@@ -96,14 +98,19 @@ public class PlayerMove : MonoBehaviour
             {
                 // 땅에 닿아 있을 때
                 PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
-                rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+                // rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
             }
-            // else if(exceptionalMove)
+            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+            // else
+            // {
+            //     rigidbody.velocity = new Vector2(horizontalMove * floatingSpeed, rigidbody.velocity.y);
+            // }
+            // else if (isParkourDoing)
             // {
             //     // dash, wall jump 후 체공 시
-            //     
+            //     rigidbody.velocity = new Vector2(horizontalMove * floatingSpeed, rigidbody.velocity.y);
             // }
-            rigidbody.velocity = new Vector2(horizontalMove * (speed * 0.6f), rigidbody.velocity.y);
+            
         }
         else
         {
@@ -164,7 +171,11 @@ public class PlayerMove : MonoBehaviour
         verticalMove = Input.GetAxisRaw("Vertical");
 
         isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
-        if (isGround) dashCnt = 1;
+        if (isGround)
+        {
+            dashCnt = 1;
+            isParkourDoing = false; // 특수 동작 체공 상태 종료
+        }
         
         SetDashVector();
         CheckSight();
@@ -217,21 +228,34 @@ public class PlayerMove : MonoBehaviour
         get => dashVector;
         set => dashVector = value;
     }
+    public float IsSightRight
+    {
+        get => isSightRight;
+        set => isSightRight = value;
+    }
+    public bool DashCoroutineStart
+    {
+        get => dashCoroutineStart;
+        set => dashCoroutineStart = value;
+    }
+    public bool WallCoroutineStart
+    {
+        get => wallCoroutineStart;
+        set => wallCoroutineStart = value;
+    }
     public bool CanBasicMove
     {
         get => canBasicMove;
         set => canBasicMove = value;
     }
-
     public bool IsWallJumping
     {
         get => isWallJumping;
         set => isWallJumping = value;
     }
-
-    public bool ExceptionalMove
+    public bool IsParkourDoing
     {
-        get => exceptionalMove;
-        set => exceptionalMove = value;
+        get => isParkourDoing;
+        set => isParkourDoing = value;
     }
 }

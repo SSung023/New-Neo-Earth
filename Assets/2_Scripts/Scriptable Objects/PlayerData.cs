@@ -5,10 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Scriptable Objects/PlayerData", order = int.MinValue)]
 public class PlayerData : ScriptableObject
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float speed; // 지상에서의 속도
     public float getSpeed => speed;
 
-    [SerializeField] private float slidingSpeed;
+    [SerializeField] private float floatingSpeed; // 특수 동작 후 체공 속도
+    public float getFloatingSpeed => floatingSpeed;
+    
+    [SerializeField] private float slidingSpeed; // 벽타기 속도
     public float getSlidingSpeed => slidingSpeed;
 
     [SerializeField] private int maxHp;
