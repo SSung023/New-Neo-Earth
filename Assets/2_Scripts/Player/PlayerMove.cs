@@ -29,12 +29,15 @@ public class PlayerMove : MonoBehaviour
     private bool changingDirection => (rigidbody.velocity.x > 0 && horizontalMove < 0) || (rigidbody.velocity.x < 0 && horizontalMove >0);
     
     // JUMP
-    //private readonly float floatingSpeed;
-    private readonly float jumpForce;
-    private readonly float maxJumpTime;
+    private readonly float jumpForce; // 점프 속도
+    private readonly float maxJumpTime; // 점프키를 누를 수 있는 최대 시간
+    private readonly float fallMultiplier; // 내려 갈 때의 중력
+    private readonly float riseMultiplier; // 올라 갈 때의 중력
     private float jumpTimeCounter;
+    private int landCount = 0;
     private bool isGround;
     private bool isJumping;
+    private bool isLanded;
     
     // WALL MOVE
     private readonly float wallJumpForce;
@@ -66,6 +69,9 @@ public class PlayerMove : MonoBehaviour
         this.slidingSpeed = playerData.getSlidingSpeed;
         
         this.jumpForce = playerData.getJumpForce;
+        this.fallMultiplier = playerData.getFallMultiplier;
+        this.riseMultiplier = playerData.getRiseMultiplier;
+        
         this.dashForce = playerData.getDashForce;
         this.wallJumpForce = playerData.getWallJumpForce;
         
@@ -89,53 +95,16 @@ public class PlayerMove : MonoBehaviour
 
         if (!isWallJumping && canBasicMove)
         {
-            //Move();
             MovePlayer();
             Dash();
+            Jump();
         }
-        
-        Jump();
         
         if (isWall)
         {
             WallMove();
         }
-
-    }
-
-    private void Move()
-    {
-        if (horizontalMove != 0)
-        {
-            isWalking = true;
-            if (isGround)
-            {
-                // 땅에 닿아 있을 때
-                PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
-                rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
-                
-            }
-            else
-            {
-                rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
-            }
-            rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
-            
-            // else
-            // {
-            //     rigidbody.velocity = new Vector2(horizontalMove * floatingSpeed, rigidbody.velocity.y);
-            // }
-            // else if (isParkourDoing)
-            // {
-            //     // dash, wall jump 후 체공 시
-            //     rigidbody.velocity = new Vector2(horizontalMove * floatingSpeed, rigidbody.velocity.y);
-            // }
-            
-        }
-        else
-        {
-            isWalking = false;
-        }
+        Land();
     }
 
     private void MovePlayer()
@@ -195,7 +164,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    
     private void Jump()
     {
         if (isGround && Input.GetKeyDown(KeyCode.Space))
@@ -204,17 +172,14 @@ public class PlayerMove : MonoBehaviour
             
             isJumping = true;
             jumpTimeCounter = 0;
-            rigidbody.velocity = Vector2.up * jumpForce;
-            //rigidbody.AddForce(Vector2.up * (jumpForce), ForceMode2D.Impulse);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
         }
-        
-        // 이 부분에서 움직임 어색
+
         if (Input.GetKey(KeyCode.Space) && isJumping)
         {
             if (jumpTimeCounter <= maxJumpTime)
             {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
-                //rigidbody.AddForce(Vector2.up * (jumpForce), ForceMode2D.Force);
                 jumpTimeCounter += Time.deltaTime;
             }
             else
@@ -227,6 +192,25 @@ public class PlayerMove : MonoBehaviour
         {
             isJumping = false;
         }
+        AdjustJumpGravity();
+    }
+    private void AdjustJumpGravity()
+    {
+        if (rigidbody.velocity.y < 0)
+        {
+            rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 2) * Time.deltaTime);
+        }
+        else if (rigidbody.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (riseMultiplier - 2) * Time.deltaTime);
+        }
+    }
+
+    private void Land()
+    {
+        // land 시에 소리 재생, velocity.x = max_speed로 고정하기
+        // 점프하다가 처음으로 땅에 닿는 순간 isLanded = true로 하고 바로 false로 바꾸기
+        
     }
 
     private void Dash()

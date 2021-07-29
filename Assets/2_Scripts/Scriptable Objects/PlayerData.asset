@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   maxMoveSpeed: 5
-  moveAcceleration: 30
-  groundLinearDrag: 30
+  moveAcceleration: 21
+  groundLinearDrag: 25
   floatingSpeed: 4
   slidingSpeed: 0.95
   maxHp: 5
-  jumpForce: 4.6
+  jumpForce: 5
   maxJumpTime: 0.3
+  fallMultiplier: 3.5
+  riseMultiplier: 2.5
   dashForce: 11
   dashDuration: 0.225
   wallJumpForce: 4.5
