@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Scriptable Objects/PlayerData", order = int.MinValue)]
 public class PlayerData : ScriptableObject
 {
+    [Header("Move speed")]
     [SerializeField] private float speed; // 지상에서의 속도
     public float getSpeed => speed;
 
@@ -14,21 +15,29 @@ public class PlayerData : ScriptableObject
     [SerializeField] private float slidingSpeed; // 벽타기 속도
     public float getSlidingSpeed => slidingSpeed;
 
+    [Header("Player Info")]
     [SerializeField] private int maxHp;
     public int getMaxHp => maxHp;
 
+    [Header("Jump")]
     [SerializeField] private float jumpForce;
     public float getJumpForce => jumpForce;
 
+    [SerializeField] private float maxJumpTime;
+    public float getMaxJumpTime => maxJumpTime;
+
+    [Header("Dash")]
     [SerializeField] private float dashForce;
     public float getDashForce => dashForce;
-
-    [SerializeField] private float dashCoolTime;
-    public float getDashCoolTime => dashCoolTime;
 
     [SerializeField] private float dashDuration;
     public float getDashDuration => dashDuration;
 
+    [Header("Wall Move")] 
+    [SerializeField] private float wallJumpForce;
+    public float getWallJumpForce => wallJumpForce;
+
+    [Header("LayerMask")]
     [SerializeField] private LayerMask layerMask_ground;
     public LayerMask getLayermask_ground => layerMask_ground;
 

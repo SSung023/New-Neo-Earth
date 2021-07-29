@@ -20,9 +20,10 @@ public class PlayerMove : MonoBehaviour
     private readonly float slidingSpeed;
     private readonly float floatingSpeed;
     private readonly float jumpForce;
+    private readonly float wallJumpForce;
     private readonly float dashForce;
-    private readonly float dashCoolTime; // const
-    private float curDashTime; // 쿨타임에 사용될 변수
+    private float jumpTimeCounter;
+    private readonly float maxJumpTime;
     private int dashCnt;
     
 
@@ -38,6 +39,7 @@ public class PlayerMove : MonoBehaviour
     private bool isWalking;
     private bool isWall; // 벽타기 유무
     private bool isGround;
+    private bool isJumping;
     private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool isParkourDoing; // 특수 동작? 대쉬, 벽점프 중인가의 여부
     private bool canBasicMove = true; // 동작이 가능한가의 여부
@@ -52,9 +54,9 @@ public class PlayerMove : MonoBehaviour
         this.slidingSpeed = playerData.getSlidingSpeed;
         this.floatingSpeed = playerData.getFloatingSpeed;
         this.jumpForce = playerData.getJumpForce;
+        this.wallJumpForce = playerData.getWallJumpForce;
+        this.maxJumpTime = playerData.getMaxJumpTime;
         this.dashForce = playerData.getDashForce;
-        this.dashCoolTime = playerData.getDashCoolTime;
-        curDashTime = dashCoolTime;
 
         this.transform = _transform;
         wallCheckTransform_r = _wallCheckTransform[0];
@@ -76,12 +78,9 @@ public class PlayerMove : MonoBehaviour
             Move();
             Dash();
         }
-
-        if (isGround)
-        {
-            Jump();
-        }
-
+        
+        Jump();
+        
         if (isWall)
         {
             WallMove();
@@ -132,20 +131,41 @@ public class PlayerMove : MonoBehaviour
             {
                 isWallJumping = true;
                 wallCoroutineStart = true;
-                rigidbody.velocity = new Vector2(-1f * isSightRight, 2.5f) * (jumpForce * 0.5f);
+                rigidbody.velocity = new Vector2(-1f * isSightRight, 2.5f) * wallJumpForce;
             }
         }
     }
     
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isGround && Input.GetKeyDown(KeyCode.Space))
         {
             PlayerFoley.playerFoley.PlayJump(); // 점프 소리 재생
-
-            // AddForce나 velocity 중 하나 선택
-            //rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            
+            isJumping = true;
+            jumpTimeCounter = 0;
             rigidbody.velocity = Vector2.up * jumpForce;
+            //rigidbody.AddForce(Vector2.up * (jumpForce), ForceMode2D.Impulse);
+        }
+        
+        // 이 부분에서 움직임 어색
+        if (Input.GetKey(KeyCode.Space) && isJumping)
+        {
+            if (jumpTimeCounter <= maxJumpTime)
+            {
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+                //rigidbody.AddForce(Vector2.up * (jumpForce), ForceMode2D.Force);
+                jumpTimeCounter += Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isJumping = false;
         }
     }
 

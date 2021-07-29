@@ -16,10 +16,11 @@ MonoBehaviour:
   floatingSpeed: 4
   slidingSpeed: 0.95
   maxHp: 5
-  jumpForce: 9
+  jumpForce: 4.6
+  maxJumpTime: 0.3
   dashForce: 11
-  dashCoolTime: 0.7
   dashDuration: 0.225
+  wallJumpForce: 4.5
   layerMask_ground:
     serializedVersion: 2
     m_Bits: 512
