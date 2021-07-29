@@ -16,47 +16,61 @@ public class PlayerMove : MonoBehaviour
     private readonly Transform wallCheckTransform_l;
     private Vector2 dashVector;
 
-    private readonly float speed;
-    private readonly float slidingSpeed;
-    private readonly float floatingSpeed;
-    private readonly float jumpForce;
-    private readonly float wallJumpForce;
-    private readonly float dashForce;
-    private float jumpTimeCounter;
-    private readonly float maxJumpTime;
-    private int dashCnt;
     
-
+    // BASIC MOVE
+    private readonly float maxMoveSpeed; // 최대 속도
+    private readonly float moveAcceleration;// 가속도
+    private readonly float linearDrag; // 저항 값
     private float horizontalMove;
     private float verticalMove;
     private float isSightRight;
-
+    private bool isWalking;
+    private bool canBasicMove = true; // 동작이 가능한가의 여부
+    private bool changingDirection => (rigidbody.velocity.x > 0 && horizontalMove < 0) || (rigidbody.velocity.x < 0 && horizontalMove >0);
+    
+    // JUMP
+    //private readonly float floatingSpeed;
+    private readonly float jumpForce;
+    private readonly float maxJumpTime;
+    private float jumpTimeCounter;
+    private bool isGround;
+    private bool isJumping;
+    
+    // WALL MOVE
+    private readonly float wallJumpForce;
+    private readonly float slidingSpeed;
+    private bool isWall; // 벽타기 유무
+    private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
+    private bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+    
+    // DASH
+    private readonly float dashForce;
+    private int dashCnt;
+    private bool dashCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+    
+    // CONST VALUE
     private const float GroundCheckDist = 0.9f;
     private const float WallCheckWidth = 0.1f;
     private const float WallCheckHeight = 0.8f;
     
-    
-    private bool isWalking;
-    private bool isWall; // 벽타기 유무
-    private bool isGround;
-    private bool isJumping;
-    private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
+    //
     private bool isParkourDoing; // 특수 동작? 대쉬, 벽점프 중인가의 여부
-    private bool canBasicMove = true; // 동작이 가능한가의 여부
-    private bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
-    private bool dashCoroutineStart = false;
     
     public PlayerMove(PlayerData _playerData, Transform _transform, Transform[] _wallCheckTransform)
     {
         this.playerData = _playerData;
         
-        this.speed = playerData.getSpeed;
+        this.maxMoveSpeed = playerData.GetMaxMoveSpeed;
+        this.moveAcceleration = playerData.GetMoveAcceleration;
+        this.linearDrag = playerData.GetGroundLinearDrag;
         this.slidingSpeed = playerData.getSlidingSpeed;
-        this.floatingSpeed = playerData.getFloatingSpeed;
+        
         this.jumpForce = playerData.getJumpForce;
-        this.wallJumpForce = playerData.getWallJumpForce;
-        this.maxJumpTime = playerData.getMaxJumpTime;
         this.dashForce = playerData.getDashForce;
+        this.wallJumpForce = playerData.getWallJumpForce;
+        
+        this.maxJumpTime = playerData.getMaxJumpTime;
+
 
         this.transform = _transform;
         wallCheckTransform_r = _wallCheckTransform[0];
@@ -75,7 +89,8 @@ public class PlayerMove : MonoBehaviour
 
         if (!isWallJumping && canBasicMove)
         {
-            Move();
+            //Move();
+            MovePlayer();
             Dash();
         }
         
@@ -97,9 +112,15 @@ public class PlayerMove : MonoBehaviour
             {
                 // 땅에 닿아 있을 때
                 PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
-                // rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+                rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
+                
             }
-            rigidbody.velocity = new Vector2(horizontalMove * speed, rigidbody.velocity.y);
+            else
+            {
+                rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
+            }
+            rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
+            
             // else
             // {
             //     rigidbody.velocity = new Vector2(horizontalMove * floatingSpeed, rigidbody.velocity.y);
@@ -117,6 +138,45 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    private void MovePlayer()
+    {
+        if (horizontalMove != 0)
+        {
+            isWalking = true;
+            if (isGround) // 땅에 닿아 있을 때
+            {
+                PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
+                rigidbody.AddForce(new Vector2(horizontalMove * moveAcceleration, 0f));
+                ApplyGroundDrag();
+            }
+            else // 공중에 떠 있을 때
+            {
+                rigidbody.AddForce(new Vector2(horizontalMove * moveAcceleration, 0f));
+            }
+            
+            // 지정한 속도보다 더 빠를 때
+            if (Mathf.Abs(rigidbody.velocity.x) > maxMoveSpeed)
+            {
+                rigidbody.velocity = new Vector2(Mathf.Sign(rigidbody.velocity.x) * maxMoveSpeed, rigidbody.velocity.y);
+            }
+        }
+        else
+        {
+            isWalking = false;
+        }
+    }
+
+    private void ApplyGroundDrag()
+    {
+        if (Mathf.Abs(horizontalMove) < 0.4f || changingDirection)
+        {
+            rigidbody.drag = linearDrag;
+        }
+        else
+        {
+            rigidbody.drag = 0f;
+        }
+    }
     private void WallMove()
     {
         isWallJumping = false;

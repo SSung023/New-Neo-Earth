@@ -6,9 +6,15 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [Header("Move speed")]
-    [SerializeField] private float speed; // 지상에서의 속도
-    public float getSpeed => speed;
+    [SerializeField] private float maxMoveSpeed; // 지상에서의 속도
+    public float GetMaxMoveSpeed => maxMoveSpeed;
 
+    [SerializeField] private float moveAcceleration; // 가속도
+    public float GetMoveAcceleration => moveAcceleration;
+
+    [SerializeField] private float groundLinearDrag; // 저항값
+    public float GetGroundLinearDrag => groundLinearDrag;
+    
     [SerializeField] private float floatingSpeed; // 특수 동작 후 체공 속도
     public float getFloatingSpeed => floatingSpeed;
     
