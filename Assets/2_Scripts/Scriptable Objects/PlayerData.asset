@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 5
   moveAcceleration: 21
-  groundLinearDrag: 20
+  groundLinearDrag: 25
   floatingSpeed: 4
   slidingSpeed: 0.95
   maxHp: 5

@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     // BASIC MOVE
     private readonly float maxMoveSpeed; // 최대 속도
     private readonly float moveAcceleration;// 가속도
-    private readonly float linearDrag; // 저항 값
+    private readonly float groundLinearDrag; // 저항 값
     private float horizontalMove;
     private float verticalMove;
     private float isSightRight;
@@ -34,11 +34,17 @@ public class PlayerMove : MonoBehaviour
     private readonly float fallMultiplier; // 내려 갈 때의 중력
     private readonly float riseMultiplier; // 올라 갈 때의 중력
     private float jumpTimeCounter;
-    private int landCount = 0;
     private bool isGround;
-    private bool isJumping;
-    private bool isLanded;
-    
+    private bool isJumpOn; // jump 컨트롤을 위한 변수
+    private bool isJumping; // 점프 중인지의 여부
+    private bool canChangeJumpValue; //
+    private bool jumpCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+
+    // LAND
+    private bool isLanded; // 
+    private bool landCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
+
+
     // WALL MOVE
     private readonly float wallJumpForce;
     private readonly float slidingSpeed;
@@ -65,7 +71,7 @@ public class PlayerMove : MonoBehaviour
         
         this.maxMoveSpeed = playerData.GetMaxMoveSpeed;
         this.moveAcceleration = playerData.GetMoveAcceleration;
-        this.linearDrag = playerData.GetGroundLinearDrag;
+        this.groundLinearDrag = playerData.GetGroundLinearDrag;
         this.slidingSpeed = playerData.getSlidingSpeed;
         
         this.jumpForce = playerData.getJumpForce;
@@ -93,6 +99,8 @@ public class PlayerMove : MonoBehaviour
         UpdateValue();
         CheckWall();
 
+        Debug.Log("isJumping: " + isJumping);
+
         if (!isWallJumping && canBasicMove)
         {
             MovePlayer();
@@ -104,7 +112,12 @@ public class PlayerMove : MonoBehaviour
         {
             WallMove();
         }
-        Land();
+
+        if (isLanded)
+        {
+            Land();
+        }
+        
     }
 
     private void MovePlayer()
@@ -139,7 +152,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Mathf.Abs(horizontalMove) < 0.4f || changingDirection)
         {
-            rigidbody.drag = linearDrag;
+            rigidbody.drag = groundLinearDrag;
         }
         else
         {
@@ -170,47 +183,58 @@ public class PlayerMove : MonoBehaviour
         {
             PlayerFoley.playerFoley.PlayJump(); // 점프 소리 재생
             
-            isJumping = true;
-            jumpTimeCounter = 0;
+            isJumpOn = true;
+            isJumping = true; // 체공 상태
+            jumpTimeCounter = maxJumpTime;
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+            jumpCoroutineStart = true;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping)
+        if (Input.GetKey(KeyCode.Space) && isJumpOn)
         {
-            if (jumpTimeCounter <= maxJumpTime)
+            if (jumpTimeCounter > 0)
             {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
-                jumpTimeCounter += Time.deltaTime;
+                jumpTimeCounter -= Time.deltaTime;
             }
-            else
+            else // 점프키를 누를 수 있는 시간이 다 됐으므로
             {
-                isJumping = false;
+                isJumpOn = false;
             }
         }
         
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            isJumping = false;
+            isJumpOn = false;
         }
+
+        //ApplyAirDrag();
         AdjustJumpGravity();
     }
     private void AdjustJumpGravity()
     {
-        if (rigidbody.velocity.y < 0)
+        if (rigidbody.velocity.y < 0 && isJumping)
         {
-            rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 2) * Time.deltaTime);
+            //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
+            rigidbody.gravityScale = fallMultiplier;
         }
-        else if (rigidbody.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        else if (rigidbody.velocity.y > 0 && Input.GetKey(KeyCode.Space) && isJumping)
         {
-            rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (riseMultiplier - 2) * Time.deltaTime);
+            //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (riseMultiplier - 1) * Time.deltaTime);
+            rigidbody.gravityScale = riseMultiplier;
+        }
+        else
+        {
+            rigidbody.gravityScale = 2;
         }
     }
 
     private void Land()
     {
         // land 시에 소리 재생, velocity.x = max_speed로 고정하기
-        // 점프하다가 처음으로 땅에 닿는 순간 isLanded = true로 하고 바로 false로 바꾸기
-        
+        // 실행이 착지하고나서 살짝 늦다
+        Debug.Log("Land 실행");
+        //rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
     }
 
     private void Dash()
@@ -234,16 +258,41 @@ public class PlayerMove : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal");
         verticalMove = Input.GetAxisRaw("Vertical");
 
-        isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
+        CheckGround();
+        
         if (isGround)
         {
             dashCnt = 1;
-            isParkourDoing = false; // 특수 동작 체공 상태 종료
         }
-        
+
+        CheckJumping();
+
         SetDashVector();
         CheckSight();
     }
+
+    private void CheckGround()
+    {
+        isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
+    }
+
+    private void CheckJumping()
+    {
+        if (canChangeJumpValue && isJumping && isGround)
+        {
+            // 땅에 닿았을 때
+            isJumping = false;
+            isLanded = true;
+            landCoroutineStart = true;
+        }
+
+        if (isJumping && isWall)
+        {
+            // 벽에 붙었을 때
+            isJumping = false;
+        }
+    }
+    
     private void SetDashVector()
     {
         dashVector = new Vector2(horizontalMove, verticalMove);
@@ -297,6 +346,16 @@ public class PlayerMove : MonoBehaviour
         get => isSightRight;
         set => isSightRight = value;
     }
+    public bool JumpCoroutineStart
+    {
+        get => jumpCoroutineStart;
+        set => jumpCoroutineStart = value;
+    }
+    public bool LandCoroutineStart
+    {
+        get => landCoroutineStart;
+        set => landCoroutineStart = value;
+    }
     public bool DashCoroutineStart
     {
         get => dashCoroutineStart;
@@ -317,9 +376,14 @@ public class PlayerMove : MonoBehaviour
         get => isWallJumping;
         set => isWallJumping = value;
     }
-    public bool IsParkourDoing
+    public bool IsLanded
     {
-        get => isParkourDoing;
-        set => isParkourDoing = value;
+        get => isLanded;
+        set => isLanded = value;
+    }
+    public bool CanChangeJumpValue
+    {
+        get => canChangeJumpValue;
+        set => canChangeJumpValue = value;
     }
 }

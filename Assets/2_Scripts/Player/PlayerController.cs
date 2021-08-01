@@ -48,6 +48,14 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(dash_controlRigid());
             }
+            if (playerMove.JumpCoroutineStart)
+            {
+                StartCoroutine(Jump_Coroutine());
+            }
+            if (playerMove.LandCoroutineStart)
+            {
+                StartCoroutine(Land_Coroutine());
+            }
         }
 
         RestartGame();
@@ -92,14 +100,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    IEnumerator Land_Coroutine()
+    {
+        playerMove.LandCoroutineStart = false;
+        playerMove.IsLanded = true;
+        yield return new WaitForSeconds(0.01f);
+        playerMove.IsLanded = false;
+    }
+    IEnumerator Jump_Coroutine()
+    {
+        playerMove.JumpCoroutineStart = false;
+        playerMove.CanChangeJumpValue = false;
+        yield return new WaitForSeconds(0.8f);
+        playerMove.CanChangeJumpValue = true;
+    }
+
     IEnumerator wallJump_changeValue()
     {
         // 벽에서 점프했을 때 실행되는 코루틴
         // 일정 시간동안 플레이어의 조작을 막아서 벽 점프가 정상적으로 실행되도록 한다
         playerMove.WallCoroutineStart = false;
         playerMove.CanBasicMove = false;
-        playerMove.IsParkourDoing = true; // 특수 동작 체공 상태 true
-        
+
         yield return new WaitForSeconds(0.3f);
         
         playerMove.IsWallJumping = false;
@@ -113,8 +136,7 @@ public class PlayerController : MonoBehaviour
         playerMove.DashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
         playerMove.CanBasicMove = false;
-        playerMove.IsParkourDoing = true;
-        
+
         yield return new WaitForSeconds(playerData.getDashDuration);
         
         playerMove.IsWallJumping = false;
