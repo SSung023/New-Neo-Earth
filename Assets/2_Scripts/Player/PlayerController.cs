@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+enum MoveType
+{
+    JUMP = 0, LAND = 1, WALL = 2, DASH = 3
+}
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
-    private PlayerMove playerMove;
     
+    private MoveController moveController;
+    private MoveType moveType;
+    
+    private PlayerMove playerMove;
+
+    private Rigidbody2D rigidbody;
     private Transform[] wallCheckTransform;
 
     //private GameManager _gameManager;
@@ -25,6 +34,10 @@ public class PlayerController : MonoBehaviour
         wallCheckTransform[0] = transform.GetChild(0);
         wallCheckTransform[1] = transform.GetChild(1);
         
+        rigidbody = GetComponent<Rigidbody2D>();
+        moveController = new MoveController(playerData, rigidbody, transform, wallCheckTransform);
+        
+        
         playerMove = new PlayerMove(playerData, transform, wallCheckTransform);
         playerMove.Rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -38,6 +51,9 @@ public class PlayerController : MonoBehaviour
     {
         if (isAlive)
         {
+            // moveController.UpdateMovement();
+            // ControlCoroutine(moveController.passCoroutineParam());
+            
             playerMove.UpdateMovement();
             
             if (playerMove.WallCoroutineStart)
@@ -101,6 +117,24 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void ControlCoroutine(int param)
+    {
+        switch (param)
+        {
+            case 0:
+                StartCoroutine(Jump_Coroutine());
+                break;
+            case 1:
+                StartCoroutine(Land_Coroutine());
+                break;
+            case 2:
+                StartCoroutine(wallJump_changeValue());
+                break;
+            case 3:
+                StartCoroutine(dash_controlRigid());
+                break;
+        }
+    }
     IEnumerator Land_Coroutine()
     {
         playerMove.LandCoroutineStart = false;
@@ -110,6 +144,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator Jump_Coroutine()
     {
+        
         playerMove.JumpCoroutineStart = false;
         playerMove.CanChangeJumpValue = false;
         yield return new WaitForSeconds(0.8f);
@@ -136,6 +171,7 @@ public class PlayerController : MonoBehaviour
         playerMove.DashCoroutineStart = false;
         playerMove.Rigidbody.gravityScale = 0f;
         playerMove.CanBasicMove = false;
+        playerMove.IsJumping = false;
 
         yield return new WaitForSeconds(playerData.getDashDuration);
         

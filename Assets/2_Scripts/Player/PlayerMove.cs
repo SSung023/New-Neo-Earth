@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     private PlayerData playerData;
+    private DashMove dashMove;
 
     private readonly LayerMask layerMask_ground;
     private readonly LayerMask layerMask_wall;
@@ -98,9 +99,7 @@ public class PlayerMove : MonoBehaviour
     {
         UpdateValue();
         CheckWall();
-
-        Debug.Log("isJumping: " + isJumping);
-
+        //Debug.Log("isJumping " + isJumping);
         if (!isWallJumping && canBasicMove)
         {
             MovePlayer();
@@ -231,10 +230,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Land()
     {
-        // land 시에 소리 재생, velocity.x = max_speed로 고정하기
-        // 실행이 착지하고나서 살짝 늦다
+        // land 시에 소리 재생
         Debug.Log("Land 실행");
-        //rigidbody.velocity = new Vector2(horizontalMove * maxMoveSpeed, rigidbody.velocity.y);
     }
 
     private void Dash()
@@ -291,6 +288,7 @@ public class PlayerMove : MonoBehaviour
             // 벽에 붙었을 때
             isJumping = false;
         }
+
     }
     
     private void SetDashVector()
@@ -370,6 +368,12 @@ public class PlayerMove : MonoBehaviour
     {
         get => canBasicMove;
         set => canBasicMove = value;
+    }
+
+    public bool IsJumping
+    {
+        get => isJumping;
+        set => isJumping = value;
     }
     public bool IsWallJumping
     {
