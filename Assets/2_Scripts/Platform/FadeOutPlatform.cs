@@ -11,7 +11,7 @@ public class FadeOutPlatform : MonoBehaviour
     private GameObject wallCheck; // Wall layer가 있는 오브젝트(자식 오브젝트)
     
     private float fadeOutDegree = 0.2f; //투명도가 0.1깎일 때까지 걸리는 시간, 클수록 느려짐
-    private float delayTime = 0; //layer가 바뀌기 전까지 걸리는 시간
+    //private float delayTime = 0; //layer가 바뀌기 전까지 걸리는 시간
     private float coolTime = 2f; //없어진 플랫폼이 다시 나타날 때 까지의 쿨타임
     private float disableTiming = 0.7f;
 
