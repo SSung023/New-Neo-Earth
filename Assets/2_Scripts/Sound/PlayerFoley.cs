@@ -73,7 +73,7 @@ public class PlayerFoley : MonoBehaviour
         }
     }
 
-    // 현재 땅에 착지한 상태인지, 바닥의 재질은 어떠한지에 따라 다른 발소리를 재생함
+    // 현재 바닥의 재질은 어떠한지에 따라 다른 착지소리를 재생함
     public void PlayJump()
     {
         if (jumpClip != null)
