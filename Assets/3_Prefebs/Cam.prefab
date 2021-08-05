@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 1212481035999609528}
   - component: {fileID: 8032465564800668029}
   - component: {fileID: 6087634315677111118}
+  - component: {fileID: 307997366361971840}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -241,7 +242,7 @@ AudioSource:
   m_GameObject: {fileID: 3765201112115604902}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3105291037126552363, guid: a0b8c4bbe36e6fb4eaaa38c4a243aaf1, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a5d3d869433637f4689dc9ae0cdfb4bd, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -337,7 +338,7 @@ AudioSource:
   m_GameObject: {fileID: 3765201112115604902}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2297699000782303869, guid: a0b8c4bbe36e6fb4eaaa38c4a243aaf1, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c5b3cfe6b0a2672438eda8da9e962afb, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -433,7 +434,7 @@ AudioSource:
   m_GameObject: {fileID: 3765201112115604902}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3105291037126552363, guid: a0b8c4bbe36e6fb4eaaa38c4a243aaf1, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a5d3d869433637f4689dc9ae0cdfb4bd, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -529,7 +530,7 @@ AudioSource:
   m_GameObject: {fileID: 3765201112115604902}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 8183532818406498642, guid: a0b8c4bbe36e6fb4eaaa38c4a243aaf1, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 715245f882e3bcd4185f217c93cbf564, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -751,6 +752,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cf1880689524bae4894bd40e901c98c2, type: 3}
   - {fileID: 8300000, guid: 636b0b4712e083c4b946af574b6d6b2c, type: 3}
   - {fileID: 8300000, guid: 39246cc09bba25e42b1d7d58d7353c18, type: 3}
+--- !u!114 &307997366361971840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765201112115604902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edbfaa87c53642d4da771791f2d69e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adaptiveTrack:
+  - clips: []
+    measures: 
+    allocates: 
 --- !u!1 &5224395278393263849
 GameObject:
   m_ObjectHideFlags: 0

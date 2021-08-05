@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 
 namespace SoundManager
 {
-
     public enum AudioType { mus, sfx, amb, uix };
 
     public class SoundManager : MonoBehaviour
@@ -27,6 +26,7 @@ namespace SoundManager
         private enum MixerType { MASTER, MUSIC, DIRECT, AMBIENT, INTERFACE};
 
         AudioclipBank bank;
+        
 
         private void Awake()
         {
@@ -43,6 +43,7 @@ namespace SoundManager
 
             AllocateAudioSources();
             AllocateAudioMixers();
+            SaveMixerStatusAll();
 
             bank = GetComponent<AudioclipBank>();
         }
@@ -93,13 +94,13 @@ namespace SoundManager
             adpSources[1] = adp;
         }
 
-        // 최상위 믹서들을 할당하고 음량 값을 할당 및 가져오는 메서드
+        // 최상위 믹서들을 할당하고 음량 값을 가져오는 메서드
         private void AllocateAudioMixers()
         {
-            topMixer.GetFloat("TopMasterVol", out masterVol);
-
             if(topMixer != null)
             {
+                topMixer.GetFloat("TopMasterVol", out masterVol);
+
                 AudioMixerGroup[] groups = topMixer.FindMatchingGroups("Top");
 
                 for (int i = 0; i < groups.Length; i++)
@@ -108,31 +109,64 @@ namespace SoundManager
                     {
                         case "TopMusic":
                             topMus = groups[i].audioMixer;
-                            topMus.GetFloat("TopMusicVol", out musVol);
                             break;
                         case "TopDirect":
                             topSfx = groups[i].audioMixer;
-                            topSfx.GetFloat("TopDirectVol", out sfxVol);
                             break;
                         case "TopAmbient":
                             topAmb = groups[i].audioMixer;
-                            topAmb.GetFloat("TopAmbientVol", out ambVol);
                             break;
                         case "TopInterface":
                             topUix = groups[i].audioMixer;
-                            topUix.GetFloat("TopInterfaceVol", out uixVol);
                             break;
                         default:
                             Debug.Log("AllocatedAudioMixers() 메서드 오류, 최상위 믹서가 너무 많습니다.");
                             break;
                     }
                 }
-
             }
         }
 
-        // 외부 파일로부터 옵션값을 가져올 때 사용할 메서드
-        private void GetMuteOptions()
+        /// <summary>
+        /// 음소거되지 않은 모든 믹서의 볼륨 상태를 저장하는 메서드
+        /// </summary>
+        private void SaveMixerStatusAll()
+        {
+            if (!masterMute) topMixer.GetFloat("MasterMixerVol", out masterVol);
+            if (!musMute)    topMus.GetFloat("TopMusicVol", out musVol);
+            if (!sfxMute)    topSfx.GetFloat("TopDirectVol", out sfxVol);
+            if (!ambMute)    topAmb.GetFloat("TopAmbientVol", out ambVol);
+            if (!uixMute)    topUix.GetFloat("TopInterfaceVol", out uixVol);
+        }
+
+        /// <summary>
+        /// 음소거되지 않은 특정 믹서의 볼륨 상태만 저장하는 메서드
+        /// </summary>
+        /// <param name="type">선택할 믹서</param>
+        private void SaveMixerStatus(MixerType type)
+        {
+            switch (type)
+            {
+                case MixerType.MASTER:
+                    if (!masterMute) topMixer.GetFloat("MasterMixerVol", out masterVol);
+                    break;
+                case MixerType.MUSIC:
+                    if (!musMute)    topMus.GetFloat("TopMusicVol", out musVol);
+                    break;
+                case MixerType.DIRECT:
+                    if (!sfxMute)    topSfx.GetFloat("TopDirectVol", out sfxVol);
+                    break;
+                case MixerType.AMBIENT:
+                    if (!ambMute)    topAmb.GetFloat("TopAmbientVol", out ambVol);
+                    break;
+                case MixerType.INTERFACE:
+                    if (!uixMute)    topUix.GetFloat("TopInterfaceVol", out uixVol);
+                    break;
+            }
+        }
+
+        // 외부 파일로부터 옵션값을 가져올 때 사용할 메서드, PlayerPrefs를 사용하게 될 듯, 현재 미사용
+        private void GetSoundPreferences()
         {
             masterMute = false;
             musMute = false;
@@ -143,7 +177,17 @@ namespace SoundManager
             // masterVol 등도 가져와야 한다.
         }
 
-        // 특정 믹서를 뮤트하는 메서드
+        // 사운드 옵션을 초기화 했을 때 사용하는 메서드
+        private void GetDefaultSoundPrefences()
+        {
+            masterMute = false;
+            musMute = false;
+            sfxMute = false;
+            ambMute = false;
+            uixMute = false;
+        }
+
+        // 특정 믹서를 음소거하는 메서드
         private void MuteMixer(MixerType type)
         {
             switch (type)
@@ -151,7 +195,7 @@ namespace SoundManager
                 case MixerType.MASTER:
                     if (!masterMute)
                     {
-                        topMixer.GetFloat("TopMasterVol", out masterVol);
+                        SaveMixerStatus(MixerType.MASTER);
                         topMixer.SetFloat("TopMasterVol", -80.0f);
                         masterMute = true;
                     }
@@ -164,7 +208,7 @@ namespace SoundManager
                 case MixerType.MUSIC:
                     if (!musMute)
                     {
-                        topMus.GetFloat("TopMusicVol", out musVol);
+                        SaveMixerStatus(MixerType.MUSIC);
                         topMus.SetFloat("TopMusicVol", -80.0f);
                         musMute = true;
                     }
@@ -177,7 +221,7 @@ namespace SoundManager
                 case MixerType.DIRECT:
                     if (!sfxMute)
                     {
-                        topSfx.GetFloat("TopDirectVol", out sfxVol);
+                        SaveMixerStatus(MixerType.DIRECT);
                         topSfx.SetFloat("TopDirectVol", -80.0f);
                         sfxMute = true;
                     }
@@ -190,7 +234,7 @@ namespace SoundManager
                 case MixerType.AMBIENT:
                     if (!ambMute)
                     {
-                        topAmb.GetFloat("TopAmbientVol", out ambVol);
+                        SaveMixerStatus(MixerType.AMBIENT);
                         topAmb.SetFloat("TopAmbientVol", -80.0f);
                         ambMute = true;
                     }
@@ -203,7 +247,7 @@ namespace SoundManager
                 case MixerType.INTERFACE:
                     if (!uixMute)
                     {
-                        topUix.GetFloat("TopInterfaceVol", out uixVol);
+                        SaveMixerStatus(MixerType.INTERFACE);
                         topUix.SetFloat("TopInterfaceVol", -80.0f);
                         uixMute = true;
                     }
@@ -215,6 +259,18 @@ namespace SoundManager
                     break;
             }
         }
+
+
+        // --------------------------- 스크립트 외부로 값을 반환하는 프로퍼티 ----------------------------
+        
+        /// <summary>
+        /// 음악에 사용할 오디오소스를 반환합니다.
+        /// </summary>
+        public AudioSource[] MusicSources
+        {
+            get { return adpSources; }
+        }
+        
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using SoundManager;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -126,7 +127,7 @@ public class PlayerMove : MonoBehaviour
             isWalking = true;
             if (isGround) // 땅에 닿아 있을 때
             {
-                PlayerFoley.playerFoley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
+                PlayerFoley._foley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
                 rigidbody.AddForce(new Vector2(horizontalMove * moveAcceleration, 0f));
                 ApplyGroundDrag();
             }
@@ -180,7 +181,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (isGround && Input.GetKeyDown(KeyCode.Space))
         {
-            PlayerFoley.playerFoley.PlayJump(); // 점프 소리 재생
+            PlayerFoley._foley.PlayJump(); // 점프 소리 재생
             
             isJumpOn = true;
             isJumping = true; // 체공 상태
