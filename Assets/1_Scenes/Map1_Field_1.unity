@@ -17981,7 +17981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1707145697}
   m_Layer: 0
-  m_Name: Spring platforms
+  m_Name: Jumping platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18248,6 +18248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0bb40004ef44e41b67317c5ad477f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topMixer: {fileID: 0}
 --- !u!114 &1930649143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23573,7 +23574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2123088132}
   m_Layer: 0
-  m_Name: Spring platforms
+  m_Name: Jumping platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
