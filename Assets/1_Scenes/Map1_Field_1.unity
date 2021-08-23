@@ -18626,7 +18626,9 @@ PolygonCollider2D:
     - - {x: 14, y: 8}
       - {x: 14, y: -9}
       - {x: -14, y: -9}
-      - {x: -14, y: 8}
+      - {x: -14, y: -3}
+      - {x: -15, y: -3}
+      - {x: -15, y: 8}
 --- !u!1 &1930649136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765201112115604902, guid: 25047eee979181a4f8459116b05842c6, type: 3}
