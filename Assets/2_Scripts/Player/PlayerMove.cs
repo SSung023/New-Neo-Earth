@@ -100,7 +100,7 @@ public class PlayerMove : MonoBehaviour
     {
         UpdateValue();
         CheckWall();
-        //Debug.Log("isJumping " + isJumping);
+
         if (!isWallJumping && canBasicMove)
         {
             MovePlayer();
@@ -271,7 +271,18 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckGround()
     {
-        isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
+        //isGround = Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDist, layerMask_ground);
+        
+        bool isGround_left = Physics2D.Raycast(new Vector2(transform.position.x - 0.1f, transform.position.y), 
+            Vector2.down, GroundCheckDist, layerMask_ground);
+        bool isGround_right = Physics2D.Raycast(new Vector2(transform.position.x + 0.1f, transform.position.y), 
+            Vector2.down, GroundCheckDist, layerMask_ground);
+
+        isGround = isGround_left || isGround_right;
+        
+        //Debug.DrawRay(transform.position, Vector3.down * GroundCheckDist, Color.cyan);
+        Debug.DrawRay(new Vector2(transform.position.x + 0.17f, transform.position.y), Vector3.down * GroundCheckDist, Color.cyan);
+        Debug.DrawRay(new Vector2(transform.position.x - 0.17f, transform.position.y), Vector3.down * GroundCheckDist, Color.cyan);
     }
 
     private void CheckJumping()
