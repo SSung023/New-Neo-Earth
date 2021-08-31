@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     private Scene _scene;
     private State GameState = State.inGame;
+    private HologramManager hologramManager;
+    
     public static GameManager instance = null;
     
 
@@ -24,13 +26,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-
+        
         InitGame();
     }
 
     private void Update()
     {
         _scene = SceneManager.GetActiveScene();
+        hologramManager = new HologramManager();
     }
 
     private void InitGame()
