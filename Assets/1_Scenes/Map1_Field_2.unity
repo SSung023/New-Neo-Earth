@@ -3944,7 +3944,7 @@ GameObject:
   - component: {fileID: 1461630789}
   m_Layer: 0
   m_Name: hologram Obj
-  m_TagString: Untagged
+  m_TagString: Hologram Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10167,7 +10167,7 @@ GameObject:
   - component: {fileID: 1729576179}
   m_Layer: 0
   m_Name: Hologram Field
-  m_TagString: Hologram On
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10185,7 +10185,7 @@ Transform:
   m_Children:
   - {fileID: 1461630789}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1729576179
 MonoBehaviour:
@@ -10199,6 +10199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40390d3da98d05847afcdb8fd2999a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hologramObj: {fileID: 0}
 --- !u!1001 &1735874042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17725,7 +17726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219415293843027941, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 219415293843027941, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18070,6 +18071,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4855211566723854025, guid: 8da6f7f644fa31f478f76e94c7869ddb, type: 3}
+      propertyPath: hologramObj
+      value: 
+      objectReference: {fileID: 1461630788}
     - target: {fileID: 8746351743629828481, guid: 8da6f7f644fa31f478f76e94c7869ddb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

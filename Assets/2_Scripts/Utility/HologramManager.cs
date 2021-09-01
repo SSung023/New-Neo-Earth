@@ -5,17 +5,23 @@ using UnityEngine;
 public class HologramManager : MonoBehaviour
 {
     private bool dpHologram;
+    private bool keepHologramOn = false;
 
-    private GameObject hologramObj;
+    [SerializeField] private GameObject hologramObj;
 
     private void Start()
     {
         dpHologram = false;
-        hologramObj = transform.GetChild(0).gameObject;
+        //hologramObj = transform.GetChild(0).gameObject;
     }
     
     private void Update()
     {
+        if (hologramObj == null)
+        {
+            hologramObj = GameObject.FindGameObjectWithTag("Hologram Object");
+        }
+        
         if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log(dpHologram);
@@ -33,7 +39,7 @@ public class HologramManager : MonoBehaviour
         }
     }
     
-    private void LoadHologram()
+    public void LoadHologram()
     {
         if (dpHologram)
         {
@@ -43,5 +49,13 @@ public class HologramManager : MonoBehaviour
         {
             hologramObj.SetActive(false);
         }
+    }
+
+
+    // GETTERS & SETTERS
+    public GameObject HologramObj
+    {
+        get => hologramObj;
+        set => hologramObj = value;
     }
 }
