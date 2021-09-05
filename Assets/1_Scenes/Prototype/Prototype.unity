@@ -5687,6 +5687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcb1580d822a274d9990687496b945b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hologramManager: {fileID: 0}
 --- !u!4 &1123424349
 Transform:
   m_ObjectHideFlags: 0
@@ -6048,8 +6049,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 14, y: 8}
-      - {x: -14, y: 8}
+    - - {x: 14, y: 34}
+      - {x: -14, y: 34}
       - {x: -14, y: -8}
       - {x: 14, y: -8}
 --- !u!4 &1341018604
@@ -6612,6 +6613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40390d3da98d05847afcdb8fd2999a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hologramObj: {fileID: 0}
 --- !u!4 &1879450873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 639031088393766567, guid: 8c0f53434a4dbb94a9559a72895b076e, type: 3}
