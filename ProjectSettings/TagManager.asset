@@ -6,9 +6,10 @@ TagManager:
   tags:
   - Trap
   - Moving Platform
-  - CameraBound
   - AudioSource
   - Hologram Object
+  - Hologram On
+  - Level Boundary
   layers:
   - Default
   - TransparentFX
