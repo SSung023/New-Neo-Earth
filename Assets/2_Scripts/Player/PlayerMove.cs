@@ -402,4 +402,10 @@ public class PlayerMove : MonoBehaviour
         get => canChangeJumpValue;
         set => canChangeJumpValue = value;
     }
+
+    public int DashCnt
+    {
+        get => dashCnt;
+        set => dashCnt = value;
+    }
 }

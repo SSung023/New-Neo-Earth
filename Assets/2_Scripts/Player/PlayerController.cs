@@ -203,4 +203,11 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireCube(wallCheckTransform[1].position, new Vector2(0.1f, 0.8f));
         }
     }
+    
+    // GETTERS && SETTERS
+    public PlayerMove PlayerMove
+    {
+        get => playerMove;
+        set => playerMove = value;
+    }
 }
