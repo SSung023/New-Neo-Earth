@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 392829623}
+  playerObj: {fileID: 0}
   spawnPointObj: {fileID: 0}
 --- !u!1 &172734878
 GameObject:
@@ -5392,6 +5393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 2012340905}
+  playerObj: {fileID: 0}
   spawnPointObj: {fileID: 0}
 --- !u!1 &764964924
 GameObject:
@@ -6371,6 +6373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 186159828}
+  playerObj: {fileID: 0}
   spawnPointObj: {fileID: 0}
 --- !u!1 &1437498449
 GameObject:
