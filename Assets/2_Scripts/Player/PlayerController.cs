@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     private Transform[] wallCheckTransform;
 
+    private Vector3 curSpawnPoint;
+
     //private GameManager _gameManager;
     
     private bool isAlive;
@@ -108,11 +110,22 @@ public class PlayerController : MonoBehaviour
     // 임시로 넣은 기능. R키를 누르면 재시작
     private void RestartGame()
     {
-        curScene = SceneManager.GetActiveScene().buildIndex;
+        /*curScene = SceneManager.GetActiveScene().buildIndex;*/
+        curSpawnPoint = GetComponent<LevelChanger>().spawnPointObj.position;
+        
         
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(curScene);
+            Debug.Log("Press R Key");
+            /*// 임시 코드
+            isAlive = true;
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            var _color = spriteRenderer.color;
+            _color.a = 1f;
+            spriteRenderer.color = _color;*/
+            
+            transform.Translate(transform.position - curSpawnPoint);
+            /*SceneManager.LoadScene(curScene);*/
         }
     }
 
