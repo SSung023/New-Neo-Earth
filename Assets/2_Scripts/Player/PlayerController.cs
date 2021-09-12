@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //RestartGame();
+        RestartGame();
     }
     
 
@@ -106,26 +106,25 @@ public class PlayerController : MonoBehaviour
     }
     
     // 임시로 넣은 기능. R키를 누르면 재시작
-    /*private void RestartGame()
+    private void RestartGame()
     {
-        /*curScene = SceneManager.GetActiveScene().buildIndex;#1#
+        /*curScene = SceneManager.GetActiveScene().buildIndex;*/
         //curSpawnPoint = GetComponent<LevelChanger>().spawnPointObj.position;
-        
         
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("Press R Key");
-            /#1#/ 임시 코드
+            //Debug.Log("Press R Key");
+            // 임시 코드
             isAlive = true;
             var spriteRenderer = GetComponent<SpriteRenderer>();
             var _color = spriteRenderer.color;
             _color.a = 1f;
-            spriteRenderer.color = _color;#1#
+            spriteRenderer.color = _color;
             
             //transform.Translate(transform.position - curSpawnPoint);
-            /*SceneManager.LoadScene(curScene);#1#
+            /*SceneManager.LoadScene(curScene);*/
         }
-    }*/
+    }
 
 
     private void ControlCoroutine(int param)
