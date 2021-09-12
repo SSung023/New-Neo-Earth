@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6232475356318824568}
   - component: {fileID: 1097283692168837426}
   m_Layer: 0
-  m_Name: Charge dash
+  m_Name: Dash charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -323063321
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 04a5075151a348245ade36e951f44c82, type: 3}
   m_Color: {r: 0, g: 0.2004807, b: 1, a: 1}
@@ -98,4 +98,4 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
-  playerController: {fileID: 0}
+  disappear_time: 1

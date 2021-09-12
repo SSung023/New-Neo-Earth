@@ -5,8 +5,11 @@ using UnityEngine;
 public class DashCharge : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float disappear_time;
     private PlayerController playerController;
     private Collider2D collider2D;
+    private SpriteRenderer spriteRenderer;
+    private bool isActive = true;
 
     
     
@@ -16,11 +19,17 @@ public class DashCharge : MonoBehaviour
         {
             playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        ChargeDash();
+        if (isActive)
+        {
+            ChargeDash();
+        }
+
     }
 
     private void ChargeDash()
@@ -31,7 +40,21 @@ public class DashCharge : MonoBehaviour
             Debug.Log("Player Dash 충전");
             
             playerController.PlayerMove.DashCnt = 1;
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            StartCoroutine(Disappear_second());
         }
+    }
+
+    IEnumerator Disappear_second()
+    {
+        isActive = false;
+        Color _color = spriteRenderer.color;
+        _color.a = 0f;
+        spriteRenderer.color = _color;
+        
+        yield return new WaitForSeconds(disappear_time);
+        isActive = true;
+        _color.a = 1f;
+        spriteRenderer.color = _color;
     }
 }
