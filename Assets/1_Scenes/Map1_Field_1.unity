@@ -4253,7 +4253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399949555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.7, y: 2.71, z: 0}
+  m_LocalPosition: {x: 13.4, y: 2.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1833497821}
@@ -6696,7 +6696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604939460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.41, y: -4.77, z: 0}
+  m_LocalPosition: {x: -14.11, y: -4.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1845836086}
@@ -17948,9 +17948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 1232736526}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 1844180158}
 --- !u!1 &1403358042
 GameObject:
   m_ObjectHideFlags: 0
@@ -19156,9 +19153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 1870299091}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 2120172384}
 --- !u!1 &1794629694
 GameObject:
   m_ObjectHideFlags: 0
@@ -19234,9 +19228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 2044773081}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 194512307}
 --- !u!1 &1815487838
 GameObject:
   m_ObjectHideFlags: 0
@@ -19342,9 +19333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 2050768542}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 399949556}
 --- !u!1 &1844180157
 GameObject:
   m_ObjectHideFlags: 0
@@ -19450,9 +19438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 1751810167}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 604939461}
 --- !u!1 &1854957232
 GameObject:
   m_ObjectHideFlags: 0
@@ -19697,9 +19682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5764c6d6d4733c459d6e742102f9dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCam: {fileID: 836806496}
-  playerObj: {fileID: 0}
-  spawnPointObj: {fileID: 413982033}
 --- !u!1 &1930649136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765201112115604902, guid: 25047eee979181a4f8459116b05842c6, type: 3}
@@ -19822,6 +19804,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1999850772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2171526321337677056, guid: 8da6f7f644fa31f478f76e94c7869ddb, type: 3}
+  m_PrefabInstance: {fileID: 8746351744664648156}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af24dcc5c6d3b4840b93931feb435763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2044773081
 GameObject:
   m_ObjectHideFlags: 0
@@ -25710,6 +25703,10 @@ PrefabInstance:
       propertyPath: hologramManager
       value: 
       objectReference: {fileID: 596419796}
+    - target: {fileID: 8746351743629828480, guid: 8da6f7f644fa31f478f76e94c7869ddb, type: 3}
+      propertyPath: respawnManager
+      value: 
+      objectReference: {fileID: 1999850772}
     - target: {fileID: 8746351743629828481, guid: 8da6f7f644fa31f478f76e94c7869ddb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
