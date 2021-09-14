@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     
-    private MoveController moveController;
+    //private MoveController moveController;
     private MoveType moveType;
     
     private PlayerMove playerMove;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         wallCheckTransform[1] = transform.GetChild(1);
         
         rigidbody = GetComponent<Rigidbody2D>();
-        moveController = new MoveController(playerData, rigidbody, transform, wallCheckTransform);
+        //moveController = new MoveController(playerData, rigidbody, transform, wallCheckTransform);
         
         
         playerMove = new PlayerMove(playerData, transform, wallCheckTransform);

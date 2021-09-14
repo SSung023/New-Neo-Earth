@@ -7,7 +7,7 @@ using SoundManager;
 public class PlayerMove : MonoBehaviour
 {
     private PlayerData playerData;
-    private DashMove dashMove;
+    //private DashMove dashMove;
 
     private readonly LayerMask layerMask_ground;
     private readonly LayerMask layerMask_wall;
