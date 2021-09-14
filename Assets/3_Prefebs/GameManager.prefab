@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcb1580d822a274d9990687496b945b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hologramManager: {fileID: 0}
-  respawnManager: {fileID: 0}
+  hologramManager: {fileID: 4855211566723854025}
+  respawnManager: {fileID: 2171526321337677056}
 --- !u!114 &4855211566723854025
 MonoBehaviour:
   m_ObjectHideFlags: 0
