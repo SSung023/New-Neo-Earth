@@ -67,7 +67,7 @@ namespace SoundManager
             if (clips != null)
             {
                 int i = Random.Range(0, clips.Length);
-                pitch = Random.Range(0.8f, 1.2f);
+                pitch = Random.Range(1.5f, 1.8f);
 
                 aud.clip = clips[i];
                 aud.pitch = pitch;
@@ -82,7 +82,7 @@ namespace SoundManager
             if (jumpClip != null)
             {
                 int i = Random.Range(0, jumpClip.Length);
-                pitch = Random.Range(0.9f, 1.1f);
+                pitch = Random.Range(1.2f, 1.4f);
 
                 aud.clip = jumpClip[i];
                 aud.pitch = pitch;

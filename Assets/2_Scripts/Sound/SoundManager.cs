@@ -34,30 +34,36 @@ namespace SoundManager
             if (_sndInstance == null)
             {
                 _sndInstance = this;
+                DontDestroyOnLoad(this);
+
+                AllocateAudioSources();
+                AllocateAudioMixers();
+                SaveMixerStatusAll();
+
+                bank = GetComponent<AudioclipBank>();
+
+                if (!_sndInstance.mus.isPlaying) // 임시로 사운드매니저에서 BGM을 재생한다.
+                {
+                    mus.clip = bank.GetClips(AudioType.mus)[1];
+                    mus.Play();
+                }
             }
             else
             {
-                Destroy(this);
+                Destroy(gameObject);
                 return;
             }
-
-            AllocateAudioSources();
-            AllocateAudioMixers();
-            SaveMixerStatusAll();
-
-            bank = GetComponent<AudioclipBank>();
         }
 
         private void Update()
         {
             if (Input.GetKey(KeyCode.BackQuote))
             {
-                if(Input.GetKeyDown(KeyCode.Alpha1)) { MuteMixer(MixerType.MASTER); }
+                if (Input.GetKeyDown(KeyCode.Alpha1)) { MuteMixer(MixerType.MASTER); }
                 if (Input.GetKeyDown(KeyCode.Alpha2)) { MuteMixer(MixerType.MUSIC); }
                 if (Input.GetKeyDown(KeyCode.Alpha3)) { MuteMixer(MixerType.DIRECT); }
                 if (Input.GetKeyDown(KeyCode.Alpha4)) { MuteMixer(MixerType.AMBIENT); }
                 if (Input.GetKeyDown(KeyCode.Alpha5)) { MuteMixer(MixerType.INTERFACE); }
-
             }
         }
 
@@ -65,29 +71,29 @@ namespace SoundManager
         private void AllocateAudioSources()
         {
             // 사운드매니저 게임오브젝트 내 5개의 오디오소스를 얻어냄
-            AudioSource[] audioSources = GetComponents<AudioSource>();
+            AudioSource[] sources = GetComponents<AudioSource>();
 
             // 오디오소스에 연결된 믹서 그룹 명에 따라 역할 배분
-            var count = 0;
-            while (count < audioSources.Length)
+            for(byte c = 0; c < sources.Length; c++)
             {
-                switch (audioSources[count].outputAudioMixerGroup.name)
+                Debug.Log(sources[c].outputAudioMixerGroup.audioMixer.name);
+
+                switch (sources[c].outputAudioMixerGroup.audioMixer.name)
                 {
                     case "Music":
-                        if (mus == null && adp == null) mus = audioSources[count];
-                        else adp = audioSources[count];
+                        if (mus == null && adp == null) mus = sources[c];
+                        else adp = sources[c];
                         break;
                     case "Direct":
-                        sfx = audioSources[count];
+                        sfx = sources[c];
                         break;
                     case "Ambient":
-                        amb = audioSources[count];
+                        amb = sources[c];
                         break;
-                    case "Interface":
-                        uix = audioSources[count];
+                    case "Master": //독립된 TopInterface 사용
+                        uix = sources[c];
                         break;
                 }
-                count++;
             }
 
             adpSources[0] = mus;
@@ -132,7 +138,7 @@ namespace SoundManager
         /// </summary>
         private void SaveMixerStatusAll()
         {
-            if (!masterMute) topMixer.GetFloat("MasterMixerVol", out masterVol);
+            if (!masterMute) topMixer.GetFloat("TopMasterVol", out masterVol);
             if (!musMute)    topMus.GetFloat("TopMusicVol", out musVol);
             if (!sfxMute)    topSfx.GetFloat("TopDirectVol", out sfxVol);
             if (!ambMute)    topAmb.GetFloat("TopAmbientVol", out ambVol);
