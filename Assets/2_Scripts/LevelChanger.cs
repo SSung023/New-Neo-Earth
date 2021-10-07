@@ -9,7 +9,6 @@ public class LevelChanger : MonoBehaviour
     private GameObject virtualCam;
     private Transform spawnPointObj;
 
-
     private void Start()
     {
         virtualCam = transform.GetChild(0).gameObject;
@@ -29,7 +28,7 @@ public class LevelChanger : MonoBehaviour
             spawnPointObj.gameObject.SetActive(true);
 
             // 해당 섹터에 들어갔을 때 respawnManager의 respawnPoint 갱신
-            GameManager.instance.respawnManager.RespawnPoint = spawnPointObj.gameObject;
+            //GameManager.instance.respawnManager.RespawnPoint = spawnPointObj.gameObject;
         }
     }
     
