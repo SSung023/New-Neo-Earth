@@ -6,13 +6,15 @@ using Vector3 = UnityEngine.Vector3;
 
 public class LaserBeam
 {
+    private readonly LayerMask layerMask;
     private Vector3 pos, dir;
     private GameObject laserObj;
     private LineRenderer laserRenderer;
     private List<Vector3> laserIndex = new List<Vector3>();
     
-    public LaserBeam(Vector3 pos, Vector3 dir, Material material)
+    public LaserBeam(Vector3 pos, Vector3 dir, Material material, LayerMask _layerMask)
     {
+        this.layerMask = _layerMask;
         this.laserRenderer = new LineRenderer();
         this.laserObj = new GameObject();
         this.laserObj.name = "Laser";
@@ -25,14 +27,8 @@ public class LaserBeam
         this.laserRenderer.material = material;
         this.laserRenderer.startColor = Color.green;
         this.laserRenderer.endColor = Color.green;
-        
-        //tmp code
-        laserIndex.Add(pos);
-        laserIndex.Add(new Vector3(pos.x, pos.y - 10, pos.z));
-        laserRenderer.SetPositions(laserIndex.ToArray());
-        laserRenderer.useWorldSpace = true;
 
-        //CastRay(pos, dir, laserRenderer);
+        CastRay(pos, dir, laserRenderer);
     }
     
 
@@ -40,21 +36,17 @@ public class LaserBeam
     {
         laserIndex.Add(pos);
 
-        Ray2D ray = new Ray2D(pos, dir);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(ray.origin,dir, 50);
+        //Ray2D ray = new Ray2D(pos, dir);
+        RaycastHit2D hit2D = Physics2D.Raycast(pos,dir, 50, layerMask);
 
-        // Ray ray2 = new Ray(pos, dir);
-        // RaycastHit hit;
-        // Physics.Raycast(ray2, out hit, 30, 1);
-
-        if (raycastHit2D.collider != null)
+        if (hit2D.collider != null)
         {
-            laserIndex.Add(raycastHit2D.point);
+            laserIndex.Add(hit2D.point);
             UpdateLaser();
         }
         else
         {
-            laserIndex.Add(ray.GetPoint(30));
+            laserIndex.Add(new Vector3(pos.x, pos.y + 50));
             UpdateLaser();
         }
     }
