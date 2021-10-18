@@ -10,6 +10,8 @@ TagManager:
   - Hologram Object
   - Hologram On
   - Level Boundary
+  - CameraBound
+  - Mirror Laser
   layers:
   - Default
   - TransparentFX
