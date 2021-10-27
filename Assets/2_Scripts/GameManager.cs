@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private Scene _scene;
     private State GameState = State.inGame;
+    public static GameObject player;
     public HologramManager hologramManager;
     public RespawnManager respawnManager;
     

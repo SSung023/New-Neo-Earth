@@ -67,9 +67,9 @@ public class LaserShooter : MonoBehaviour
             
             
         }
-        else
+        else if(hit.collider.gameObject.tag == "Player")
         {
-            
+            GameManager.player.GetComponent<PlayerController>().Die();
         }
     }
 }

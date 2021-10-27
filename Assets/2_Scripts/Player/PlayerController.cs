@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         
         playerMove = new PlayerMove(playerData, transform, wallCheckTransform);
         playerMove.Rigidbody = GetComponent<Rigidbody2D>();
+        GameManager.player = this.gameObject;
     }
     private void Start()
     {
