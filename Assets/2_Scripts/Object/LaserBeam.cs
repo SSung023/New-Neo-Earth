@@ -28,11 +28,11 @@ public class LaserBeam
         this.laserRenderer.startColor = Color.green;
         this.laserRenderer.endColor = Color.green;
 
-        CastRay(pos, dir, laserRenderer);
+        CastRay(pos, dir);
     }
     
 
-    void CastRay(Vector3 pos, Vector3 dir, LineRenderer lineRenderer)
+    void CastRay(Vector3 pos, Vector3 dir)
     {
         laserIndex.Add(pos);
 
@@ -41,8 +41,9 @@ public class LaserBeam
 
         if (hit2D.collider != null)
         {
-            laserIndex.Add(hit2D.point);
-            UpdateLaser();
+            // laserIndex.Add(hit2D.point);
+            // UpdateLaser();
+            CheckHit(hit2D, dir);
         }
         else
         {
@@ -60,6 +61,22 @@ public class LaserBeam
         {
             laserRenderer.SetPosition(count, idx);
             count++;
+        }
+    }
+
+    void CheckHit(RaycastHit2D hit, Vector3 direction)
+    {
+        if (hit.collider.tag == "Mirror")
+        {
+            Vector3 pos = hit.point;
+            Vector3 dir = Vector3.Reflect(direction, hit.normal);
+            
+            CastRay(pos, dir);
+        }
+        else
+        {
+            laserIndex.Add(hit.point);
+            UpdateLaser();
         }
     }
 }

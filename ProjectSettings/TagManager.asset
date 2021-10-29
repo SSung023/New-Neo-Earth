@@ -12,6 +12,7 @@ TagManager:
   - Level Boundary
   - CameraBound
   - Mirror Laser
+  - Mirror
   layers:
   - Default
   - TransparentFX
