@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    private float goSpeed = 7f;
+    private float goSpeed = 7.5f;
     private float backSpeed = 1.5f; //(구현x)갔다가 올 때 속도 다르면 좋겠다고 할 수도 있어서 변수 2개 만듦
     private float delayTime = 0.5f; //(구현x)발판 밟을 때 살짝 기다리는 시간
     private bool _canMove = false;
