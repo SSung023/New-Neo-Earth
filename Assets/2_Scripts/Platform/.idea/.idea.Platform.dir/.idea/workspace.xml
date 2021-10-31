@@ -10,9 +10,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/SpringPlatform.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/FallingPlatform.cs" />
+      <option value="$PROJECT_DIR$/MovingPlatform.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1vXMqu7U0QbDnNfrhRcOA2BLZVx" />
@@ -36,13 +40,14 @@
       <option name="presentableId" value="Default" />
       <updated>1626704176686</updated>
       <workItem from="1626704182428" duration="895000" />
+      <workItem from="1635661101400" duration="1203000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
