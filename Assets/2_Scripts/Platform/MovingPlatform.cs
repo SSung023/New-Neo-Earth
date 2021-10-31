@@ -8,7 +8,7 @@ public class MovingPlatform : MonoBehaviour
     private float goSpeed = 7f;
     private float backSpeed = 1.5f; //(구현x)갔다가 올 때 속도 다르면 좋겠다고 할 수도 있어서 변수 2개 만듦
     private float delayTime = 0.5f; //(구현x)발판 밟을 때 살짝 기다리는 시간
-    private bool canMove = false;
+    private bool _canMove = false;
 
     [Header("Positions")]
     [SerializeField] protected Transform startPos;
@@ -16,11 +16,18 @@ public class MovingPlatform : MonoBehaviour
 
     private Vector3 _nextPos;
 
+    private void Start()
+    {
+        _canMove = false;
+        gameObject.transform.position = startPos.position;
+        _nextPos = startPos.position;
+    }
+    
     private void FixedUpdate()
     {
         SetNextPosition();
         
-        if (canMove)
+        if (_canMove)
         {
             StartCoroutine("MovePlatform");
         }
@@ -32,6 +39,14 @@ public class MovingPlatform : MonoBehaviour
 
     IEnumerator MovePlatform()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _canMove = false;
+            StopCoroutine(MovePlatform());
+            gameObject.transform.position = startPos.position;
+            _nextPos = startPos.position;
+        }
+        
         yield return new WaitForSeconds(delayTime);
         
         //목표지점까지 current 지점을 직선이동
@@ -39,7 +54,7 @@ public class MovingPlatform : MonoBehaviour
         
         if (gameObject.transform.position == startPos.position)
         {
-            canMove = false;
+            _canMove = false;
         }
     }
 
@@ -59,7 +74,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            canMove = true;
+            _canMove = true;
         }
     }
 
@@ -67,7 +82,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (col.CompareTag("Player") && gameObject.transform.position == startPos.position)
         {
-            canMove = true;
+            _canMove = true;
         }
     }
 

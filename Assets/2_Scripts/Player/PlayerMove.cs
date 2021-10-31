@@ -167,7 +167,7 @@ public class PlayerMove : MonoBehaviour
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canBasicMove)
+        if (Input.GetKeyDown(KeyCode.Z) && canBasicMove)
         {
             if (!isWallJumping)
             {
@@ -179,7 +179,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void Jump()
     {
-        if (isGround && Input.GetKeyDown(KeyCode.Space))
+        if (isGround && Input.GetKeyDown(KeyCode.Z))
         {
             PlayerFoley._foley.PlayJump(); // 점프 소리 재생
             
@@ -190,7 +190,7 @@ public class PlayerMove : MonoBehaviour
             jumpCoroutineStart = true;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumpOn)
+        if (Input.GetKey(KeyCode.Z) && isJumpOn)
         {
             if (jumpTimeCounter > 0)
             {
@@ -203,7 +203,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Z))
         {
             isJumpOn = false;
         }
@@ -218,7 +218,7 @@ public class PlayerMove : MonoBehaviour
             //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
             rigidbody.gravityScale = fallMultiplier;
         }
-        else if (rigidbody.velocity.y > 0 && Input.GetKey(KeyCode.Space) && isJumping)
+        else if (rigidbody.velocity.y > 0 && Input.GetKey(KeyCode.Z) && isJumping)
         {
             //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (riseMultiplier - 1) * Time.deltaTime);
             rigidbody.gravityScale = riseMultiplier;
@@ -240,7 +240,7 @@ public class PlayerMove : MonoBehaviour
         // 땅에 닿아있을 때 or 아직 대쉬 기회가 남아있을 때
         if (isGround || (!isGround && dashCnt == 1))
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 rigidbody.velocity = Vector2.zero;
                 rigidbody.velocity = dashVector * dashForce;

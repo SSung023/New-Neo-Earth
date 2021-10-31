@@ -32,7 +32,7 @@ public class HologramManager : MonoBehaviour
 
     private void SetMode()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log(dpHologram);
             dpHologram = !dpHologram;
