@@ -26,9 +26,6 @@ public class LevelChanger : MonoBehaviour
             //카메라, 스폰 포인트 오브젝트 관리
             virtualCam.SetActive(true);
             spawnPointObj.gameObject.SetActive(true);
-
-            // 해당 섹터에 들어갔을 때 respawnManager의 respawnPoint 갱신
-            //GameManager.instance.respawnManager.RespawnPoint = spawnPointObj.gameObject;
         }
     }
     
