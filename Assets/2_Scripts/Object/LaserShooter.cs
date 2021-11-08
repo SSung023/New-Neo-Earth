@@ -9,20 +9,15 @@ public class LaserShooter : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float rayDistance = 100;
-    [SerializeField] private Transform laserFirePos;
-    private Transform m_transform;
+    //[SerializeField] private Transform laserFirePos;
     private LineRenderer lineRenderer;
 
-    private bool increaseFlag = false;
-    private int idx; // lineRenderer의 index
-
-    private List<Vector3> laserIndex = new List<Vector3>();
-    
+    //private Vector3 pos;
+    [SerializeField] private int reflections; // 반사의 최대 횟수
     
 
     private void Awake()
     {
-        m_transform = GetComponent<Transform>();
         lineRenderer = GetComponent<LineRenderer>();
         
         this.lineRenderer.startWidth = 0.1f;
@@ -30,8 +25,7 @@ public class LaserShooter : MonoBehaviour
         this.lineRenderer.startColor = Color.green;
         this.lineRenderer.endColor = Color.green;
 
-        idx = 0;
-        laserIndex[0] = transform.position;
+        //pos = transform.position;
     }
 
     private void Update()
@@ -41,57 +35,55 @@ public class LaserShooter : MonoBehaviour
 
     private void ShootLaser(Vector3 pos, Vector3 dir)
     {
-        RaycastHit2D hit = Physics2D.Raycast(pos, dir, int.MaxValue,layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(pos, dir, rayDistance,layerMask);
 
-        if (hit.collider != null)
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0, transform.position);
+
+        float remainingLength = rayDistance;
+
+        for (int i = 0; i < reflections; i++)
         {
-            CheckHit(hit, dir);
-            DrawRay2D(pos, hit.point);
+            if (hit.collider)
+            {
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
+                
+                remainingLength -= Vector3.Distance(pos, hit.point);
+
+                // pos = hit.point;
+                // hit = Physics2D.Raycast(pos, Vector3.Reflect(dir, hit.normal), rayDistance,layerMask);
+                
+                if (hit.collider.gameObject.tag == "Player")
+                {
+                    GameManager.player.GetComponent<PlayerController>().Die();
+                }
+                if (hit.collider.gameObject.tag == "Mirror")
+                {
+                    pos = hit.point;
+                    dir = Vector3.Reflect(dir, hit.normal);
+                    hit = Physics2D.Raycast(pos, dir, rayDistance,layerMask);
+                    
+                    lineRenderer.positionCount++;
+                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point + ((Vector2)dir * remainingLength));
+                    break;
+                }
+                else
+                {
+                    // lineRenderer.positionCount++;
+                    // lineRenderer.SetPosition(lineRenderer.positionCount - 1, pos + dir * remainingLength);
+                }
+            }
         }
-        else
-        {
-            DrawRay2D(pos, dir  * rayDistance);
-        }
-    }
-
-    private void DrawRay2D(Vector2 start, Vector2 end)
-    {
-        //lineRenderer.SetPosition(0, start);
-        //lineRenderer.SetPosition(1, end);
-        lineRenderer.SetPosition(idx, start);
-        lineRenderer.SetPosition(idx + 1, end);
-
-        //lineRenderer.positionCount++; // 한 번만 늘어나야 하는데..
-        //idx++;
-    }
-
-    private void ApplyList()
-    {
-        int count = 0;
-        foreach (var item in laserIndex)
-        {
-            lineRenderer.SetPosition(count, item);
-            count++;
-        }
-    }
-
-    private void AddPoint(Vector2 point)
-    {
-        laserIndex.Add(point);
     }
 
     private void CheckHit(RaycastHit2D hit, Vector2 direction)
     {
-        // 해당 Mirror 오브젝트를 처음 만났을 때 그 때에 한 번만 이루어져야 한다. 지금은 Update문을 통해서 idx가 급작스럽게 늘어난다
-        // idx 컨트롤 할 방법이 필요하다
-        if (hit.collider.gameObject.tag == "Mirror" && !increaseFlag)
+        if (hit.collider.gameObject.tag == "Mirror")
         {
-            
             Vector2 pos = hit.point;
             Vector2 dir = Vector2.Reflect(direction, hit.normal);
-
-            increaseFlag = true;
-            ShootLaser(pos, dir);
+            
         }
         else if(hit.collider.gameObject.tag == "Player")
         {
