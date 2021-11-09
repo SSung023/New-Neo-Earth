@@ -49,30 +49,32 @@ public class LaserShooter : MonoBehaviour
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point);
                 
-                remainingLength -= Vector3.Distance(pos, hit.point);
+                remainingLength -= Vector2.Distance(pos, hit.point);
 
-                // pos = hit.point;
-                // hit = Physics2D.Raycast(pos, Vector3.Reflect(dir, hit.normal), rayDistance,layerMask);
-                
-                if (hit.collider.gameObject.tag == "Player")
-                {
-                    GameManager.player.GetComponent<PlayerController>().Die();
-                }
-                if (hit.collider.gameObject.tag == "Mirror")
-                {
-                    pos = hit.point;
-                    dir = Vector3.Reflect(dir, hit.normal);
-                    hit = Physics2D.Raycast(pos, dir, rayDistance,layerMask);
-                    
-                    lineRenderer.positionCount++;
-                    lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point + ((Vector2)dir * remainingLength));
-                    break;
-                }
-                else
-                {
-                    // lineRenderer.positionCount++;
-                    // lineRenderer.SetPosition(lineRenderer.positionCount - 1, pos + dir * remainingLength);
-                }
+                //pos = hit.point;
+                dir = Vector3.Reflect(dir, hit.normal);
+                hit = Physics2D.Raycast(pos, dir, rayDistance,layerMask);
+                Debug.DrawRay(pos, dir, Color.yellow);
+                Debug.Log(pos);
+                // if (hit.collider.gameObject.tag == "Player")
+                // {
+                //     GameManager.player.GetComponent<PlayerController>().Die();
+                // }
+                // if (hit.collider.gameObject.tag == "Mirror")
+                // {
+                //     pos = hit.point;
+                //     dir = Vector3.Reflect(dir, hit.normal);
+                //     hit = Physics2D.Raycast(pos, dir, rayDistance,layerMask);
+                //     
+                //     // lineRenderer.positionCount++;
+                //     // lineRenderer.SetPosition(lineRenderer.positionCount - 1, hit.point + ((Vector2)dir * remainingLength));
+                //     //break;
+                // }
+            }
+            else
+            {
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, pos + dir * remainingLength);
             }
         }
     }
@@ -89,5 +91,10 @@ public class LaserShooter : MonoBehaviour
         {
             GameManager.player.GetComponent<PlayerController>().Die();
         }
+    }
+
+    private void DrawOnGizmos()
+    {
+        
     }
 }
