@@ -8,6 +8,7 @@ public class FallingPlatform : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Transform landingPos;
     [SerializeField] private Vector2 checkVector;
+    private Vector3 startPos; // tmp code
     private LayerMask playerLayer;
     private Transform checkPos;
 
@@ -25,25 +26,36 @@ public class FallingPlatform : MonoBehaviour
     }
     private void Start()
     {
-        
+        startPos = transform.position;
+        canExecute = true;
     }
     
     private void Update()
     {
         CheckPlayer();
-        
+        ReturnToStartPos();
     }
 
     private void CheckPlayer()
     {
-        if (!canExecute)
+        if (canExecute)
         {
             isPlayerOn = Physics2D.OverlapBox(checkPos.position, checkVector, 0, playerLayer);
             if (isPlayerOn)
             {
                 StartCoroutine(StandbyAndDrop());
-                canExecute = true;
+                canExecute = false;
             }
+        }
+    }
+    
+    //tmp code
+    private void ReturnToStartPos()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = startPos;
+            canExecute = true;
         }
     }
 
