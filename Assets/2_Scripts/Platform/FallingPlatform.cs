@@ -7,7 +7,7 @@ public class FallingPlatform : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Transform landingPos;
-    [SerializeField] private Vector2 checkVector;
+    private Vector2 checkVector;
     private Vector3 startPos; // tmp code
     private LayerMask playerLayer;
     private Transform checkPos;
@@ -23,6 +23,9 @@ public class FallingPlatform : MonoBehaviour
     {
         playerLayer = LayerMask.GetMask("Player");
         checkPos = transform.GetChild(0);
+
+        checkVector.x = transform.localScale.x * 1.1f;
+        checkVector.y = transform.localScale.y * 0.95f;
     }
     private void Start()
     {
