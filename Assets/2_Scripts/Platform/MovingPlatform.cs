@@ -18,14 +18,17 @@ public class MovingPlatform : MonoBehaviour
 
     private void Start()
     {
+        var position = startPos.position;
+        
         _canMove = false;
-        gameObject.transform.position = startPos.position;
-        _nextPos = startPos.position;
+        gameObject.transform.position = position;
+        _nextPos = position;
     }
     
     private void FixedUpdate()
     {
         SetNextPosition();
+        Restart();
         
         if (_canMove)
         {
@@ -37,16 +40,21 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    IEnumerator MovePlatform()
+    private void Restart()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("코루틴아 멈춰라~");
             _canMove = false;
-            StopCoroutine(MovePlatform());
-            gameObject.transform.position = startPos.position;
             _nextPos = startPos.position;
+            gameObject.transform.position = startPos.position;
+            
+            StopCoroutine(MovePlatform());
         }
-        
+    }
+
+    IEnumerator MovePlatform()
+    {
         yield return new WaitForSeconds(delayTime);
         
         //목표지점까지 current 지점을 직선이동
