@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
 
     private readonly LayerMask layerMask_ground;
     private readonly LayerMask layerMask_wall;
+    private readonly LayerMask layerMask_normalWall;
     private Rigidbody2D rigidbody;
     private BoxCollider2D boxCollider2D;
     private Transform transform;
@@ -50,7 +51,8 @@ public class PlayerMove : MonoBehaviour
     // WALL MOVE
     private readonly float wallJumpForce;
     private readonly float slidingSpeed;
-    private bool isWall; // 벽타기 유무
+    private bool isWall; // 벽 타기 가능한 벽 유무
+    private bool isNormalWall; // 벽 타기 불가능한 벽 유무
     private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
     
@@ -92,14 +94,17 @@ public class PlayerMove : MonoBehaviour
 
         layerMask_ground = playerData.getLayermask_ground;
         layerMask_wall = playerData.getLayermask_wall;
+        layerMask_normalWall = playerData.getLayerMask_normalWall;
     }
     
     
     
     public void UpdateMovement()
     {
+        Debug.Log(isNormalWall);
         UpdateValue();
         CheckWall();
+        CheckNormalWall();
 
         if (!isWallJumping && canBasicMove)
         {
@@ -108,7 +113,7 @@ public class PlayerMove : MonoBehaviour
             Jump();
         }
         
-        if (isWall)
+        if (isWall || isNormalWall)
         {
             WallMove();
         }
@@ -167,7 +172,7 @@ public class PlayerMove : MonoBehaviour
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && canBasicMove)
+        if (Input.GetKeyDown(KeyCode.Z) && canBasicMove && isWall)
         {
             if (!isWallJumping)
             {
@@ -207,8 +212,7 @@ public class PlayerMove : MonoBehaviour
         {
             isJumpOn = false;
         }
-
-        //ApplyAirDrag();
+        
         AdjustJumpGravity();
     }
     private void AdjustJumpGravity()
@@ -218,7 +222,7 @@ public class PlayerMove : MonoBehaviour
             //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
             rigidbody.gravityScale = fallMultiplier;
         }
-        else if (rigidbody.velocity.y > 0 && Input.GetKey(KeyCode.Z) && isJumping)
+        else if (rigidbody.velocity.y > 0 && isJumping)
         {
             //rigidbody.velocity += Vector2.up * (Physics2D.gravity.y * (riseMultiplier - 1) * Time.deltaTime);
             rigidbody.gravityScale = riseMultiplier;
@@ -313,7 +317,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void CheckWall()
+    private void CheckWall() // 벽 점프하는 벽 탐지
     {
         if (isSightRight == 1)
         {
@@ -322,6 +326,18 @@ public class PlayerMove : MonoBehaviour
         else if(isSightRight == -1)
         {
             isWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
+        }
+    }
+
+    private void CheckNormalWall() // 벽 점프 불가능한 벽 탐지
+    {
+        if (isSightRight == 1)
+        {
+            isNormalWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_normalWall);
+        }
+        else if(isSightRight == -1)
+        {
+            isNormalWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_normalWall);
         }
     }
     

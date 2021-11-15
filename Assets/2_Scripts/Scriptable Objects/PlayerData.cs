@@ -65,4 +65,7 @@ public class PlayerData : ScriptableObject
 
     [SerializeField] private LayerMask layerMask_wall;
     public LayerMask getLayermask_wall => layerMask_wall;
+
+    [SerializeField] private LayerMask layerMask_normalWall;
+    public LayerMask getLayerMask_normalWall => layerMask_normalWall;
 }

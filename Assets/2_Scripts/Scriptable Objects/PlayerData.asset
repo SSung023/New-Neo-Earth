@@ -31,3 +31,6 @@ MonoBehaviour:
   layerMask_wall:
     serializedVersion: 2
     m_Bits: 256
+  layerMask_normalWall:
+    serializedVersion: 2
+    m_Bits: 512
