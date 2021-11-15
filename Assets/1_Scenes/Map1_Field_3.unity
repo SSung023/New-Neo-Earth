@@ -557,11 +557,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8191728810217299968, guid: c72066a2b9f3cff408eb94ffb2320c1e, type: 3}
   m_PrefabInstance: {fileID: 241126508}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &245602050 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5857598820159617378, guid: 25047eee979181a4f8459116b05842c6, type: 3}
-  m_PrefabInstance: {fileID: 219415295529770500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &324052248
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,11 +712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &360967624 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3236559103268959832, guid: 25047eee979181a4f8459116b05842c6, type: 3}
-  m_PrefabInstance: {fileID: 219415295529770500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &398052306
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,11 +2305,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8191728810217299968, guid: c72066a2b9f3cff408eb94ffb2320c1e, type: 3}
   m_PrefabInstance: {fileID: 743665676}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &745919212 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7421648039268201878, guid: 25047eee979181a4f8459116b05842c6, type: 3}
-  m_PrefabInstance: {fileID: 219415295529770500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &749163519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,7 +2548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845734479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.01, y: -74.95, z: 0}
+  m_LocalPosition: {x: 85, y: -75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 79165833}
@@ -2596,10 +2581,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 10, y: 18.5}
+    - - {x: 10, y: 19}
       - {x: 10, y: -8}
       - {x: -21, y: -8}
-      - {x: -21, y: 18.5}
+      - {x: -21, y: 19}
 --- !u!114 &845734482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2822,7 +2807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945843339}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48, y: -44.1, z: 0}
+  m_LocalPosition: {x: 48, y: -44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1526346495}
@@ -2958,11 +2943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &996019668 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7573585428755853393, guid: 25047eee979181a4f8459116b05842c6, type: 3}
-  m_PrefabInstance: {fileID: 219415295529770500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &997943004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3530,7 +3510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240690050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.9, y: -71.9, z: 0}
+  m_LocalPosition: {x: 43, y: -72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1981955867}
@@ -3563,10 +3543,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 21, y: 15}
-      - {x: 21, y: -12}
-      - {x: -25, y: -12}
-      - {x: -25, y: 15}
+    - - {x: 21, y: 16}
+      - {x: 21, y: -17}
+      - {x: -24, y: -17}
+      - {x: -24, y: 16}
 --- !u!114 &1240690053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4169,10 +4149,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 9, y: 12}
-      - {x: 9, y: -15.1}
-      - {x: -30, y: -15.1}
-      - {x: -30, y: 12}
+    - - {x: 10, y: 13}
+      - {x: 10, y: -15}
+      - {x: -30, y: -15}
+      - {x: -30, y: 13}
 --- !u!114 &1498314662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27357,19 +27337,19 @@ PrefabInstance:
     - target: {fileID: 219415295098578554, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: boundTransform.Array.data[0]
       value: 
-      objectReference: {fileID: 996019668}
+      objectReference: {fileID: 0}
     - target: {fileID: 219415295098578554, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: boundTransform.Array.data[1]
       value: 
-      objectReference: {fileID: 245602050}
+      objectReference: {fileID: 0}
     - target: {fileID: 219415295098578554, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: boundTransform.Array.data[2]
       value: 
-      objectReference: {fileID: 745919212}
+      objectReference: {fileID: 0}
     - target: {fileID: 219415295098578554, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: boundTransform.Array.data[3]
       value: 
-      objectReference: {fileID: 360967624}
+      objectReference: {fileID: 0}
     - target: {fileID: 219415295098578555, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: orthographic size
       value: 10
