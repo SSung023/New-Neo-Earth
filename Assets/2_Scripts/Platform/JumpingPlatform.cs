@@ -1,14 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpingPlatform : MonoBehaviour
 {
-    private void OnCollisionStay2D(Collision2D col)
+    private RaycastHit2D rayHit;
+    private float _yRay;
+    
+    private void Start()
     {
-        if (col.gameObject.CompareTag("Jumping Platform"))
+        _yRay = gameObject.transform.localScale.y * 0.7f;
+    }
+
+    private void Update()
+    {
+        DrawRay();
+    }
+
+    private void DrawRay()
+    {
+        rayHit = Physics2D.Raycast(transform.position, Vector3.down, _yRay, LayerMask.GetMask("Ground"));
+            
+        Debug.DrawRay(transform.position, Vector3.down * _yRay, Color.green);
+
+        if (rayHit.collider == true && rayHit.collider.CompareTag("Moving Platform"))
         {
-            transform.SetParent(col.transform);
+            Debug.Log("점핑과 무빙이 닿아있음");
+            
+            transform.SetParent(rayHit.collider.transform);
         }
     }
 }

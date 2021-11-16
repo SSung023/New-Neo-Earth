@@ -44,7 +44,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("코루틴아 멈춰라~");
+            /*Debug.Log("코루틴아 멈춰라~");*/
             _canMove = false;
             _nextPos = startPos.position;
             gameObject.transform.position = startPos.position;
@@ -100,11 +100,6 @@ public class MovingPlatform : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             col.transform.SetParent(transform);
-        }
-
-        if (col.gameObject.CompareTag("Jumping Platform"))
-        {
-            Debug.Log("점핑과 무빙이 닿아있음");
         }
     }
     
