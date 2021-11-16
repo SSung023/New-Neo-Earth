@@ -101,6 +101,11 @@ public class MovingPlatform : MonoBehaviour
         {
             col.transform.SetParent(transform);
         }
+
+        if (col.gameObject.CompareTag("Jumping Platform"))
+        {
+            Debug.Log("점핑과 무빙이 닿아있음");
+        }
     }
     
     private void OnCollisionExit2D(Collision2D col)

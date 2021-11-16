@@ -13,6 +13,7 @@ TagManager:
   - CameraBound
   - Mirror Laser
   - Mirror
+  - Jumping Platform
   layers:
   - Default
   - TransparentFX
