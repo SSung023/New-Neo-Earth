@@ -24,7 +24,13 @@ public class JumpingPlatform : MonoBehaviour
             
         Debug.DrawRay(transform.position, Vector3.down * _yRay, Color.green);
 
-        if (rayHit.collider == true && rayHit.collider.CompareTag("Moving Platform"))
+        /*if (rayHit.collider.gameObject.CompareTag("Moving Platform"))
+        {
+            Debug.Log("점핑과 무빙이 닿아있음");
+            
+            transform.SetParent(rayHit.collider.transform);
+        }*/
+        if (rayHit == true)
         {
             Debug.Log("점핑과 무빙이 닿아있음");
             
