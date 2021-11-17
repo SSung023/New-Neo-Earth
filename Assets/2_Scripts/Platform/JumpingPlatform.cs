@@ -7,6 +7,8 @@ public class JumpingPlatform : MonoBehaviour
 {
     private RaycastHit2D rayHit;
     private float _yRay;
+
+    private Transform parentPlatform;
     
     private void Start()
     {
@@ -16,6 +18,8 @@ public class JumpingPlatform : MonoBehaviour
     private void Update()
     {
         DrawRay();
+        
+        transform.parent = parentPlatform;
     }
 
     private void DrawRay()
@@ -33,8 +37,12 @@ public class JumpingPlatform : MonoBehaviour
         if (rayHit == true)
         {
             Debug.Log("점핑과 무빙이 닿아있음");
-            
-            transform.SetParent(rayHit.collider.transform);
+
+            parentPlatform = rayHit.collider.gameObject.transform;
+        }
+        else
+        {
+            parentPlatform = null;
         }
     }
 }
