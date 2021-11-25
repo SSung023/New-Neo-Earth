@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -4802,7 +4802,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -15421,7 +15421,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -15519,7 +15519,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -20073,7 +20073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578555, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: orthographic size
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578555, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: near clip plane
@@ -20085,11 +20085,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 120.34
+      value: 120.34001
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -47.65
+      value: -50.65
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.z

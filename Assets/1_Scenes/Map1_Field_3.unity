@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -4267,7 +4267,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -18780,7 +18780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981919613}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38, y: 11.799999, z: -9.992189}
+  m_LocalPosition: {x: -50.480003, y: 11.400002, z: -9.992189}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1807367965}
@@ -18911,7 +18911,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -27154,7 +27154,7 @@ MonoBehaviour:
   m_Follow: {fileID: 120339570}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -27521,11 +27521,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104
+      value: 91.52
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -43.2
+      value: -43.6
       objectReference: {fileID: 0}
     - target: {fileID: 1177366221737286625, guid: 35f9081d0dac7614db62a1a8ea67d02d, type: 3}
       propertyPath: m_LocalPosition.z
