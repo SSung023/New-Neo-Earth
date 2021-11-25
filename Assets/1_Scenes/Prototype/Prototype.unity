@@ -433,11 +433,11 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 120339570}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 120339570}
   m_Lens:
-    FieldOfView: 60
-    OrthographicSize: 6
+    FieldOfView: 70
+    OrthographicSize: 6.73
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -659,10 +659,10 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 120339570}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 120339570}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 70
     OrthographicSize: 8
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -684,7 +684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392829623}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3399999, z: -9.992189}
+  m_LocalPosition: {x: -3.0300007, y: 0.68000007, z: -9.992189}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1291608453}
@@ -7386,11 +7386,11 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 120339570}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 120339570}
   m_Lens:
-    FieldOfView: 60
-    OrthographicSize: 6
+    FieldOfView: 70
+    OrthographicSize: 7
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -9462,17 +9462,21 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 219415295098578555, guid: 25047eee979181a4f8459116b05842c6, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -9.422203
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.07743
+      value: 26.547428
       objectReference: {fileID: 0}
     - target: {fileID: 219415295098578564, guid: 25047eee979181a4f8459116b05842c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6172094
+      value: 4.2972097
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25047eee979181a4f8459116b05842c6, type: 3}
