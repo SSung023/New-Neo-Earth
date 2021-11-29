@@ -1051,7 +1051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &399949556
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399949555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.19, y: 9.56, z: 0}
+  m_LocalPosition: {x: -7.05, y: 10.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 832437059}
@@ -1091,7 +1091,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.37828827, y: 1.0051422}
+  m_Offset: {x: -0.9662895, y: 0.42630386}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1102,7 +1102,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2964478, y: 2.78022}
+  m_Size: {x: 4.0125504, y: 1.8526077}
   m_EdgeRadius: 0
 --- !u!1 &413982032
 GameObject:
@@ -4490,6 +4490,26 @@ PrefabInstance:
       propertyPath: m_ForceMagnitude
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 3397463154537351522, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
+      propertyPath: m_Color.r
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397463154537351522, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397463154537351522, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397463154537351522, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6b25ff51364a5b94dabfbb0df397eacf, type: 3}
+    - target: {fileID: 3397463154537351522, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3397463154537351523, guid: b9d98311651575b40a55c2c7d2d9b76c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 123
