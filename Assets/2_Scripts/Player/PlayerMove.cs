@@ -51,7 +51,7 @@ public class PlayerMove : MonoBehaviour
     // WALL MOVE
     private readonly float wallJumpForce;
     private readonly float slidingSpeed;
-    private bool isWall; // 벽 타기 가능한 벽 유무
+    private bool isJumpWall; // 벽 타기 가능한 벽 유무
     private bool isNormalWall; // 벽 타기 불가능한 벽 유무
     private bool isWallJumping; // 벽타는 동안에 점프했는가의 유무
     private bool wallCoroutineStart = false; // 해당 변수가 true가 되면 코루틴을 실행
@@ -101,7 +101,7 @@ public class PlayerMove : MonoBehaviour
     
     public void UpdateMovement()
     {
-        Debug.Log(isNormalWall);
+        Debug.Log("isNormalWall : " + isNormalWall);
         UpdateValue();
         CheckWall();
         CheckNormalWall();
@@ -113,7 +113,7 @@ public class PlayerMove : MonoBehaviour
             Jump();
         }
         
-        if (isWall || isNormalWall)
+        if (isJumpWall || isNormalWall)
         {
             WallMove();
         }
@@ -167,12 +167,12 @@ public class PlayerMove : MonoBehaviour
     private void WallMove()
     {
         isWallJumping = false;
-        if (canBasicMove)
+        if (canBasicMove && isJumpWall)
         {
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) && canBasicMove && isWall)
+        if (Input.GetKeyDown(KeyCode.Z) && canBasicMove && isJumpWall)
         {
             if (!isWallJumping)
             {
@@ -199,7 +199,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce + 1);
                 jumpTimeCounter -= Time.deltaTime;
             }
             else // 점프키를 누를 수 있는 시간이 다 됐으므로
@@ -299,7 +299,7 @@ public class PlayerMove : MonoBehaviour
             landCoroutineStart = true;
         }
 
-        if (isJumping && isWall)
+        if (isJumping && isJumpWall)
         {
             // 벽에 붙었을 때
             isJumping = false;
@@ -321,11 +321,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (isSightRight == 1)
         {
-            isWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
+            isJumpWall = Physics2D.OverlapBox(wallCheckTransform_r.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
         }
         else if(isSightRight == -1)
         {
-            isWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
+            isJumpWall = Physics2D.OverlapBox(wallCheckTransform_l.position, new Vector2(WallCheckWidth, WallCheckHeight), 0, layerMask_wall);
         }
     }
 
