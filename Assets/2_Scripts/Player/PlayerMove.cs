@@ -167,9 +167,14 @@ public class PlayerMove : MonoBehaviour
     private void WallMove()
     {
         isWallJumping = false;
-        if (canBasicMove && isJumpWall)
+        if (canBasicMove)
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
+            if(isJumpWall)
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
+            // if (isNormalWall)
+            // {
+            //     rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y);
+            // }
         }
 
         if (Input.GetKeyDown(KeyCode.Z) && canBasicMove && isJumpWall)
