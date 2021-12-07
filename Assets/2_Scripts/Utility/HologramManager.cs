@@ -24,7 +24,7 @@ public class HologramManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Debug.Log(dpHologram);
+            //Debug.Log(dpHologram);
             dpHologram = !dpHologram;
         }
         LoadHologram();

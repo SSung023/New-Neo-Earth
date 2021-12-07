@@ -36,7 +36,7 @@ public class JumpingPlatform : MonoBehaviour
         }*/
         if (rayHit == true)
         {
-            Debug.Log("점핑과 무빙이 닿아있음");
+            //Debug.Log("점핑과 무빙이 닿아있음");
 
             parentPlatform = rayHit.collider.gameObject.transform;
         }

@@ -169,8 +169,12 @@ public class PlayerMove : MonoBehaviour
         isWallJumping = false;
         if (canBasicMove)
         {
-            if(isJumpWall)
+            if (isJumpWall)
+            {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * slidingSpeed);
+                Debug.Log("슬라이딩");
+            }
+                
             // if (isNormalWall)
             // {
             //     rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y);

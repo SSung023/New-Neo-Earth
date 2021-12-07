@@ -78,8 +78,8 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape:
-    - - {x: 41, y: -44}
-      - {x: 41, y: 50}
+    - - {x: 43, y: -44}
+      - {x: 43, y: 50}
       - {x: 50, y: 50}
       - {x: 50, y: -44}
     bones: []
