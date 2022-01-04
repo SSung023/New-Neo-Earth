@@ -51,13 +51,19 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Normal_wall
+    uniqueID: 133326939
+    locked: 0
+  - name: Normal
+    uniqueID: 3336236829
+    locked: 0
   - name: spike
     uniqueID: 1503313991
     locked: 0
-  - name: Platform
-    uniqueID: 3336236829
+  - name: Hologram_wall
+    uniqueID: 2114830781
     locked: 0
-  - name: Hologram
+  - name: Hologram_normal
     uniqueID: 1266479765
     locked: 0
   - name: Objects
