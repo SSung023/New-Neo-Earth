@@ -23,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     // BASIC MOVE
     private readonly float maxMoveSpeed; // 최대 속도
     private readonly float moveAcceleration;// 가속도
-    private readonly float groundLinearDrag; // 저항 값
+    //private readonly float groundLinearDrag; // 저항 값
     private float horizontalMove;
     private float verticalMove;
     private float isSightRight;
@@ -75,7 +75,7 @@ public class PlayerMove : MonoBehaviour
         
         this.maxMoveSpeed = playerData.GetMaxMoveSpeed;
         this.moveAcceleration = playerData.GetMoveAcceleration;
-        this.groundLinearDrag = playerData.GetGroundLinearDrag;
+        //this.groundLinearDrag = playerData.GetGroundLinearDrag;
         this.slidingSpeed = playerData.getSlidingSpeed;
         
         this.jumpForce = playerData.getJumpForce;
@@ -134,7 +134,7 @@ public class PlayerMove : MonoBehaviour
             {
                 PlayerFoley._foley.StartCoroutine("FootstepSound"); // 땅에서 이동할 때만 발소리 재생
                 rigidbody.AddForce(new Vector2(horizontalMove * moveAcceleration, 0f));
-                ApplyGroundDrag();
+                //ApplyGroundDrag();
             }
             else // 공중에 떠 있을 때
             {
@@ -157,7 +157,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Mathf.Abs(horizontalMove) < 0.4f || changingDirection)
         {
-            rigidbody.drag = groundLinearDrag;
+            //rigidbody.drag = groundLinearDrag;
         }
         else
         {
