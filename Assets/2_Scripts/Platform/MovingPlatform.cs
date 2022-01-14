@@ -44,10 +44,12 @@ public class MovingPlatform : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            /*Debug.Log("코루틴아 멈춰라~");*/
+            //Debug.Log("코루틴아 멈춰라~");
             _canMove = false;
-            _nextPos = startPos.position;
-            gameObject.transform.position = startPos.position;
+            var position = startPos.position;
+            
+            _nextPos = position;
+            gameObject.transform.position = position;
             
             StopCoroutine(MovePlatform());
         }

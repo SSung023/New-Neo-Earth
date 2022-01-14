@@ -12,12 +12,16 @@ public class JumpingPlatform : MonoBehaviour
     
     private void Start()
     {
-        _yRay = gameObject.transform.localScale.y * 0.7f;
+        //_yRay = gameObject.transform.localScale.y * 0.7f;
+        parentPlatform = transform.parent;
+        Debug.Log("Jumping의 부모: " + parentPlatform.name);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        DrawRay();
+        //DrawRay();
+        
+        
         
         transform.parent = parentPlatform;
     }
@@ -36,7 +40,7 @@ public class JumpingPlatform : MonoBehaviour
         }*/
         if (rayHit == true)
         {
-            //Debug.Log("점핑과 무빙이 닿아있음");
+            Debug.Log("점핑과 무빙이 닿아있음");
 
             parentPlatform = rayHit.collider.gameObject.transform;
         }
